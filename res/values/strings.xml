@@ -4,5 +4,11 @@
     <string name="app_name">CodersLiveHack</string>
     <string name="title_activity_coders_live_hack">CodersLiveHackActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_create_task">CreateTaskActivity</string>
+    <string name="title_activity_select_task">SelectTaskActivity</string>
+    <string name="title_activity_timer">TimerActivity</string>
+    <string name="title_activity_assess">AssessActivity</string>
+    <string name="title_activity_graph">GraphActivity</string>
+    <string name="title_activity_get_git_commit">GetGitCommitActivity</string>
 
 </resources>

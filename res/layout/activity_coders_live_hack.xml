@@ -5,8 +5,66 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
+        android:id="@+id/tvAppName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="CodersLiveHack"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/tvInstructionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvAppName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:text="Instruction" />
+
+    <TextView
+        android:id="@+id/tvInstructionBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Blah Blah Blah ..." />
+
+    <Button
+        android:id="@+id/btnHomeToNumGitCommit"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Github Commit Amount" />
+
+    <Button
+        android:id="@+id/btnHomeToGraph"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btnHomeToNumGitCommit"
+        android:layout_alignParentRight="true"
+        android:text="Graphical data" />
+
+    <Button
+        android:id="@+id/btnHomeToSelectTask"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Select Task" />
+
+    <Button
+        android:id="@+id/btnHomeToCreateTask"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnHomeToGraph"
+        android:layout_alignBottom="@+id/btnHomeToGraph"
+        android:layout_alignParentLeft="true"
+        android:text="Create Task" />
 
 </RelativeLayout>
