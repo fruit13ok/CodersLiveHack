@@ -23,7 +23,10 @@ public class SelectTaskActivity extends Activity
 	ListView lvProjectList;
 	Button btnSelectProjectToWork, btnSelectTaskToHome;
 	
+	DBHelperAdapter dBHelperAdapter;
+	
 	public final static String EXTRA_SELECTED_TASK = "selected project for timer";
+	String selectedTask;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -31,8 +34,13 @@ public class SelectTaskActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_task);
 		
-		// TODO:
+		selectedTask = "";
+		
 		// populate the alProjectList by query the database
+		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
+		String strAllData = dBHelperAdapter.getAllData();
+		final String[] arrAllData = strAllData.split("\\n");
+		alProjectList = new ArrayList<String>(Arrays.asList(arrAllData));
 		
 		lvProjectList = (ListView) findViewById(R.id.lvProjectList);
 		if(!alProjectList.isEmpty())
@@ -58,6 +66,7 @@ public class SelectTaskActivity extends Activity
 			{
 			    // When clicked, show a toast with the TextView text
 			    Toast.makeText(getApplicationContext(), "clicked "+((TextView) view).getText(), Toast.LENGTH_SHORT).show();
+			    selectedTask = ((TextView)view).getText().toString();
 			}
 		});
 		
@@ -72,7 +81,14 @@ public class SelectTaskActivity extends Activity
 				// if user not select any task or selected the completed task toast to use.
 				// for now only select incomplete task can go to timer, (talk to Joel to confirm).
 				Intent selectTaskToTimerIntent = new Intent(getBaseContext(), TimerActivity.class);
-				selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "place holder project");
+				if(selectedTask.isEmpty())
+				{
+					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "nothing projected");
+				}
+				else
+				{
+					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, selectedTask);
+				}
 				startActivity(selectTaskToTimerIntent);
 				finish();
 			}

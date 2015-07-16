@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <TextView
-        android:id="@+id/tvSelectTaskLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Select Task To Work"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/btnSelectProjectToWork"
         style="?android:attr/buttonStyleSmall"
@@ -27,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSelectProjectToWork"
-        android:layout_below="@+id/tvSelectTaskLabel"
+        android:layout_below="@+id/tvDataHeaderSelectTask"
         android:layout_centerHorizontal="true" >
 
     </ListView>
@@ -40,5 +31,23 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Home" />
+
+    <TextView
+        android:id="@+id/tvDataHeaderSelectTask"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSelectTaskLabel"
+        android:layout_centerHorizontal="true"
+        android:text="id | title | lang | desc | start | spent | prod | distr"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvSelectTaskLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Select Task To Work"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>
