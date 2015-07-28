@@ -21,7 +21,7 @@ public class SelectTaskActivity extends Activity
 	ArrayList<String> alProjectList = new ArrayList<String>();
 	ArrayAdapter<String> aaProjectList;
 	ListView lvProjectList;
-	Button btnSelectProjectToWork, btnSelectTaskToHome;
+	Button btnSelectProjectToWork, btnSelectTaskToHome, btnSelectTaskToDummyUpdate;
 	
 	DBHelperAdapter dBHelperAdapter;
 	
@@ -102,6 +102,18 @@ public class SelectTaskActivity extends Activity
 			{
 				Intent selectTaskToHomeIntent = new Intent(getBaseContext(), CodersLiveHackActivity.class);
 				startActivity(selectTaskToHomeIntent);
+				finish();
+			}
+		});
+		
+		btnSelectTaskToDummyUpdate = (Button) findViewById(R.id.btnSelectTaskToDummyUpdate);
+		btnSelectTaskToDummyUpdate.setOnClickListener(new OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				Intent selectTaskToDummyUpdateIntent = new Intent(getBaseContext(), DummyUpdateActivity.class);
+				startActivity(selectTaskToDummyUpdateIntent);
 				finish();
 			}
 		});

@@ -166,7 +166,7 @@ public class TimerActivity extends Activity
             public void onTick(long millisUntilFinished)
             {
                 //do something in every tick
-                if(isPaused || isCanceled)
+                if(isPaused || isCanceled || accumulatedTimeSpent >= 50)
                 {
                     //If the user request to cancel or paused the
                     //CountDownTimer we will cancel the current instance
@@ -212,7 +212,7 @@ public class TimerActivity extends Activity
         {
             public void onTick(long millisUntilFinished)
             {
-                if(isCanceled)
+                if(isCanceled || accumulatedTimeSpent >= 50)
                 {
                     cancel();
                 }

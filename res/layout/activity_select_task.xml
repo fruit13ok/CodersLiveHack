@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSelectTaskLabel"
         android:layout_centerHorizontal="true"
-        android:text="id | title | lang | desc | start | spent | prod | distr"
+        android:text="id | title | lang | des | start | spent | prod | prof | dist | prog"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -49,5 +49,14 @@
         android:layout_centerHorizontal="true"
         android:text="Select Task To Work"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/btnSelectTaskToDummyUpdate"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="dummy update" />
 
 </RelativeLayout>

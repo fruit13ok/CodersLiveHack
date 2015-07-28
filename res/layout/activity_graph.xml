@@ -12,31 +12,80 @@
         android:layout_centerHorizontal="true"
         android:text="Graph of Projects"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-
+    
     <TextView
-        android:id="@+id/tvFilterPLanguageLabel"
+        android:id="@+id/tvYaxisLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvGraphLabel"
-        android:layout_marginTop="10dp"
-        android:text="Filter by programming Language:"
+        android:layout_centerVertical="true"
+        android:text="\ny\n \nt\ni\nt\nl\ne"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvLegend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:text="g\nr\na\np\nh\n \nL\ne\ng\ne\nn\nd"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/tvXaxisLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvSelectedProjectInfo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:text="x title"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/graph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvXaxisLabel"
+        android:layout_below="@+id/spFilterProgrammingLanguage"
+        android:layout_toLeftOf="@+id/tvLegend"
+        android:layout_toRightOf="@+id/tvYaxisLabel"
+        android:background="@android:color/holo_blue_light" />
 
     <Spinner
         android:id="@+id/spFilterProgrammingLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvFilterPLanguageLabel" />
-
+        android:layout_toRightOf="@+id/btnFilter"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/tvGraphLabel" />
+ 
     <Button
         android:id="@+id/btnGraphToHome"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_alignParentRight="true"
         android:text="Home" />
+
+    <TextView
+        android:id="@+id/tvSelectedProjectInfo"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/btnGraphToHome"
+        android:background="@android:color/holo_green_light"
+        android:scrollbars="vertical"
+        android:text="selected project information"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <Button
+        android:id="@+id/btnFilter"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignBottom="@+id/spFilterProgrammingLanguage"
+        android:text="Filter" />
 
 </RelativeLayout>

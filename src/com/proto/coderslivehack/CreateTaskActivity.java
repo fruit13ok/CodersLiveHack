@@ -16,6 +16,9 @@ public class CreateTaskActivity extends Activity
 	
 	DBHelperAdapter dBHelperAdapter;
 	
+	// TODO: delete these 2 edittext start date and grade later, they are just dummy
+	EditText etDummyStartDate, etDummyGrade, etDummyDistraction;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -25,6 +28,10 @@ public class CreateTaskActivity extends Activity
 		etSetProjectTitle = (EditText) findViewById(R.id.etSetProjectTitle);
 		etSetProjectPLanguages = (EditText) findViewById(R.id.etSetProjectPLanguages);
 		etSetProjectDescription = (EditText) findViewById(R.id.etSetProjectDescription);
+		
+		etDummyStartDate = (EditText) findViewById(R.id.etDummyStartDate);
+		etDummyGrade = (EditText) findViewById(R.id.etDummyGrade);
+		etDummyDistraction = (EditText) findViewById(R.id.etDummyDistraction);
 		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		
@@ -40,7 +47,12 @@ public class CreateTaskActivity extends Activity
 				String programmingLanguages = etSetProjectPLanguages.getText().toString();
 				String projectDescription = etSetProjectDescription.getText().toString();
 				
-				long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, projectDescription);
+				String startDate = etDummyStartDate.getText().toString();
+				String grade = etDummyGrade.getText().toString();
+				String distraction = etDummyDistraction.getText().toString();
+				
+				long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, projectDescription, 
+						startDate, grade, distraction);
 				if(id < 0)
 				{
 					Toast.makeText(getApplicationContext(), "unsuccessful", Toast.LENGTH_LONG).show();

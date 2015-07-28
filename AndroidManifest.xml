@@ -40,11 +40,17 @@
         </activity>
         <activity
             android:name=".GraphActivity"
-            android:label="@string/title_activity_graph" >
+            android:configChanges="orientation"
+            android:label="@string/title_activity_graph"
+            android:screenOrientation="landscape" >
         </activity>
         <activity
             android:name=".GetGitCommitActivity"
             android:label="@string/title_activity_get_git_commit" >
+        </activity>
+        <activity
+            android:name=".DummyUpdateActivity"
+            android:label="@string/title_activity_dummy_update" >
         </activity>
     </application>
 

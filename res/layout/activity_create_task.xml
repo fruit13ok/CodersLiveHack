@@ -73,4 +73,31 @@
         android:layout_centerHorizontal="true"
         android:text="Home" />
 
+    <EditText
+        android:id="@+id/etDummyStartDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etSetProjectDescription"
+        android:ems="10"
+        android:hint="dummy start date" />
+
+    <EditText
+        android:id="@+id/etDummyGrade"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etDummyStartDate"
+        android:ems="10"
+        android:hint="dummy grade" />
+
+    <EditText
+        android:id="@+id/etDummyDistraction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etDummyGrade"
+        android:ems="10"
+        android:hint="dummy distraction" />
+
 </RelativeLayout>
