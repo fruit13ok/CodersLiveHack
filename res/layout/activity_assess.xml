@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
-
+<!-- 
     <TextView
         android:id="@+id/tvSelfAssessmentLabel"
         android:layout_width="wrap_content"
@@ -63,7 +63,60 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvDefficultyLabel" />
+ -->
+ 
+ 	<TextView
+        android:id="@+id/tvSelfAssessmentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Self-Assessment"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <TextView
+        android:id="@+id/tvDistractionLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvSelfAssessmentLabel"
+        android:layout_marginTop="30dp"
+        android:text="How often were you distracted during task?"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Spinner
+        android:id="@+id/spDistraction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvDistractionLabel" />
+
+    <TextView
+        android:id="@+id/tvProductivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/spDistraction"
+        android:layout_marginTop="30dp"
+        android:text="Rate Your Level of Productivity: "
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Spinner
+        android:id="@+id/spProductivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tvProductivity" />
+
+    <EditText
+        android:id="@+id/etTaskComments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/spProductivity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:ems="10"
+        android:maxLength="140"
+        android:hint="Add a Comment to task (Optional) limit 140 chars" />
+ 	
     <Button
         android:id="@+id/btnAssessToGraph"
         style="?android:attr/buttonStyleSmall"

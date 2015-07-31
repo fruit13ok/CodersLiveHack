@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="UTF-8"?><RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -34,33 +34,29 @@
             android:id="@+id/btnStartTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Start" />
-
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
+        
         <Button
             android:id="@+id/btnPauseTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Pause" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
 
         <Button
             android:id="@+id/btnResumeTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Resume" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
 
         <Button
             android:id="@+id/btnStopTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.25"
-            android:text="Stop" />
+            android:layout_height="match_parent"
+            android:layout_weight="0.25" />
     </LinearLayout>
 
     <LinearLayout
@@ -131,7 +127,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvSelectedProjectLabel"
-        android:text="id | title | lang | desc | start | spent | prod | distr"
+        android:text="id | title | lang | des | start | spent | prod | dist | prog | est | com"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView

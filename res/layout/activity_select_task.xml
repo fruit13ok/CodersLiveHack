@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSelectTaskLabel"
         android:layout_centerHorizontal="true"
-        android:text="id | title | lang | des | start | spent | prod | prof | dist | prog"
+        android:text="id | title | lang | des | start | spent | prod | dist | prog | est | com"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView

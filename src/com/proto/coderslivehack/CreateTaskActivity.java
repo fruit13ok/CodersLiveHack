@@ -5,10 +5,31 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+// TODO:
+// after finish code merge make insert_EstimationValue() from an update() into part of insert()
+/*
+ * Three Added Variables:
+ *
+ * Spinner spEstimation
+ * ArrayAdapter<CharSequence> aaEstimation
+ * String mEstimationValue
+ *
+ * Added a method call to insert the estimation Value into database within the
+ *      onClick method of the btnAddProjectToDB button.
+ *
+ * This completes changes and additions to CreateTaskActivity.java
+ */
+/*
+ * Added a call to insert the estimation Value into database
+ *      when the user presses btnAddProjectToDB.
+ */
 public class CreateTaskActivity extends Activity
 {
 	EditText etSetProjectTitle, etSetProjectPLanguages, etSetProjectDescription;
@@ -18,6 +39,10 @@ public class CreateTaskActivity extends Activity
 	
 	// TODO: delete these 2 edittext start date and grade later, they are just dummy
 	EditText etDummyStartDate, etDummyGrade, etDummyDistraction;
+	
+	Spinner spEstimation;
+	ArrayAdapter<CharSequence> aaEstimation;
+	String mEstimationValue;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -34,6 +59,26 @@ public class CreateTaskActivity extends Activity
 		etDummyDistraction = (EditText) findViewById(R.id.etDummyDistraction);
 		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
+		
+		spEstimation = (Spinner) findViewById(R.id.spTimeEstimation);
+		aaEstimation = ArrayAdapter.createFromResource(this,
+				R.array.estimationValues,
+				android.R.layout.simple_spinner_item);
+		aaEstimation.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spEstimation.setAdapter(aaEstimation);
+		spEstimation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener()
+		{
+			@Override
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+			{
+				mEstimationValue = parent.getItemAtPosition(position).toString();
+			}
+			@Override
+			public void onNothingSelected(AdapterView<?> parent)
+			{
+				mEstimationValue = parent.getItemAtPosition(0).toString();
+			}
+		});
 		
 		btnAddProjectToDB = (Button) findViewById(R.id.btnAddProjectToDB);
 		btnAddProjectToDB.setOnClickListener(new OnClickListener()
@@ -53,6 +98,14 @@ public class CreateTaskActivity extends Activity
 				
 				long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, projectDescription, 
 						startDate, grade, distraction);
+				
+				//TODO: see top of page
+				/**
+				 * Added a call to insert the estimation Value into database
+				 *      when the user presses btnAddProjectToDB.
+				 */
+				dBHelperAdapter.insert_EstimationValue(projectTitle,mEstimationValue);
+				
 				if(id < 0)
 				{
 					Toast.makeText(getApplicationContext(), "unsuccessful", Toast.LENGTH_LONG).show();

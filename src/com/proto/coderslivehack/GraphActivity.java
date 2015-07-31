@@ -388,7 +388,7 @@ public class GraphActivity extends Activity
 		        
 		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
 		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-		        		"\nid | title | lang | des | start | spent | prod | prof | dist | prog\n" + 
+		        		"\nid | title | lang | des | start | spent | prod | dist | prog | est | com\n" + 
 		        		DataWholeRow + "\n" + strDBDateAndGrades);
 		    }
 		});
@@ -424,7 +424,7 @@ public class GraphActivity extends Activity
 //		        
 //		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
 //		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-//		        		"\nid | title | lang | des | start | spent | prod | prof | dist | prog\n" + 
+//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | est | com\n" + 
 //		        		DataWholeRow + "\n" + strDBDateAndGrades);
 //		    }
 //		});
