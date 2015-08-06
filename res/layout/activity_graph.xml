@@ -12,24 +12,6 @@
         android:layout_centerHorizontal="true"
         android:text="Graph of Projects"
         android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-    <TextView
-        android:id="@+id/tvYaxisLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_centerVertical="true"
-        android:text="\ny\n \nt\ni\nt\nl\ne"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-    <TextView
-        android:id="@+id/tvLegend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:text="g\nr\na\np\nh\n \nL\ne\ng\ne\nn\nd"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/tvXaxisLabel"
@@ -38,7 +20,7 @@
         android:layout_above="@+id/tvSelectedProjectInfo"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="10dp"
-        android:text="x title"
+        android:text="Grade (Y-Axis) Date (X-Axis)"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <com.jjoe64.graphview.GraphView
@@ -47,8 +29,6 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvXaxisLabel"
         android:layout_below="@+id/spFilterProgrammingLanguage"
-        android:layout_toLeftOf="@+id/tvLegend"
-        android:layout_toRightOf="@+id/tvYaxisLabel"
         android:background="@android:color/holo_blue_light" />
 
     <Spinner

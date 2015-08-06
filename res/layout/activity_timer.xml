@@ -102,16 +102,6 @@
         android:text="Assess" />
 
     <TextView
-        android:id="@+id/tvWorkOrBreakTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvTimer"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
-        android:hint="Work or Break time"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/tvSelectedProjectLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -137,5 +127,22 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvDataHeaderTimer"
         android:hint="no project selected yet" />
+
+    <TextView
+        android:id="@+id/tvAccumulatedTimeSpent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvTimer"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:hint="Time spent" />
+
+    <TextView
+        android:id="@+id/tvWorkOrBreakTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvAccumulatedTimeSpent"
+        android:layout_centerHorizontal="true"
+        android:hint="Working or Breaking" />
 
 </RelativeLayout>

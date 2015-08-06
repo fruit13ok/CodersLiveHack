@@ -69,11 +69,11 @@ public class GraphActivity extends Activity
 	
 	// use these 3 to label the graph x y axis, may be legend too, because the spacing of this API have some problem,
 	// use tvSelectedProjectInfo to display info of a data point to viewer.
-	TextView tvYaxisLabel, tvLegend, tvXaxisLabel, tvSelectedProjectInfo;
+	TextView tvXaxisLabel, tvSelectedProjectInfo;
 	
 	// use to access database
 	DBHelperAdapter dBHelperAdapter;
-	String DataWholeRow;
+	String dataWholeRow;
 	
 	// these are use for convert string of query result to data point array.
 	String strDBDateAndGrades;
@@ -100,8 +100,6 @@ public class GraphActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		
-		tvYaxisLabel = (TextView) findViewById(R.id.tvYaxisLabel);
-		tvLegend = (TextView) findViewById(R.id.tvLegend);
 		tvXaxisLabel = (TextView) findViewById(R.id.tvXaxisLabel);
 		tvSelectedProjectInfo = (TextView) findViewById(R.id.tvSelectedProjectInfo);
 		tvSelectedProjectInfo.setMovementMethod(new ScrollingMovementMethod());
@@ -111,7 +109,7 @@ public class GraphActivity extends Activity
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		strDBDateAndGrades = "";
 		strDBDateAndDistractions = "";
-		DataWholeRow = "";
+		dataWholeRow = "";
 		
 		//
 		graph = (GraphView) findViewById(R.id.graph);
@@ -374,24 +372,74 @@ public class GraphActivity extends Activity
 //			}
 //		});
 		
-		seriesDateGrade.setOnDataPointTapListener(new OnDataPointTapListener()
-		{
-		    @Override
-		    public void onTap(Series series, DataPointInterface dataPoint)
-		    {
-		    	// To get date from double type to a Date type
-		    	long l = (long) (dataPoint.getX());
-		    	Date d = new Date(l);
-		    	String s = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(d);
-		        Toast.makeText(getApplicationContext(), 
-		        		"date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
-		        
-		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
-		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-		        		"\nid | title | lang | des | start | spent | prod | dist | prog | est | com\n" + 
-		        		DataWholeRow + "\n" + strDBDateAndGrades);
-		    }
-		});
+//		seriesDateGrade.setOnDataPointTapListener(new OnDataPointTapListener()
+//		{
+//		    @Override
+//		    public void onTap(Series series, DataPointInterface dataPoint)
+//		    {
+//		    	// To get date from double type to a Date type
+//		    	long l = (long) (dataPoint.getX());
+//		    	Date d = new Date(l);
+//		    	String s = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(d);
+//		        Toast.makeText(getApplicationContext(), 
+//		        		"date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
+//		        
+//		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
+//		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
+//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | est | com\n" + 
+//		        		DataWholeRow + "\n" + strDBDateAndGrades);
+//		    }
+//		});
+		
+		/**
+         * Joel Version Of method call setOnDataPointTapListener
+         */
+        seriesDateGrade.setOnDataPointTapListener(new OnDataPointTapListener()
+        {
+            @Override
+            public void onTap(Series series, DataPointInterface dataPoint)
+            {
+                // To get date from double type to a Date type
+                long l = (long) (dataPoint.getX());
+                Date d = new Date(l);
+                String s = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(d);
+                Toast.makeText(getApplicationContext(),
+                        "date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
+
+                dataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, "" + (int) dataPoint.getY(),"|");
+
+                String[] allData = dataWholeRow.split("\\|");
+                String projectTitle = allData[1];
+                String projectLanguage = allData[2];
+                String description = allData[3];
+                String timeSpent = allData[5];
+                String distractionLevel = allData[7];
+                String finalProgress = allData[8];
+                String estimationVal = allData[9];
+                String comments = allData[10];
+
+                if(description.length() <= 1)
+                {
+                    description = "No Project description found";
+                }
+
+                if(comments.length() >= 1 && comments != null)
+                {
+                    Toast.makeText(getApplicationContext(),
+                            "Comments: " + comments.length() , Toast.LENGTH_SHORT).show();
+                    comments = "No Project Comments found ";
+                }
+
+                tvSelectedProjectInfo.setText("Title: " + projectTitle + " | " + "Date: " + s
+                        + " | "+ "Language: " + projectLanguage + " | " + "Grade: " + dataPoint.getY()
+                        + "\n" + "Estimation Time Spent: " + estimationVal + " | "
+                        + "Time Spent: " + timeSpent + " | " + "Distraction: " + distractionLevel
+                        + " | " + "Final Progress: " + finalProgress
+                        + "\n" + "scroll for Description and Comments..."
+                        + "\n" + "\n" + "Description:\n" + description
+                        + "\n" + "Comments: \n" + comments);
+            }
+        });
 	}
 	
 	public void setDateDistractionSeries(DataPoint[] mArDP)

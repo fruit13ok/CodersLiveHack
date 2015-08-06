@@ -48,33 +48,6 @@
         android:text="Home" />
 
     <EditText
-        android:id="@+id/etDummyStartDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etSetProjectDescription"
-        android:ems="10"
-        android:hint="dummy start date" />
-
-    <EditText
-        android:id="@+id/etDummyGrade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etDummyStartDate"
-        android:ems="10"
-        android:hint="dummy grade" />
-
-    <EditText
-        android:id="@+id/etDummyDistraction"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etDummyGrade"
-        android:ems="10"
-        android:hint="dummy distraction" />
-
-    <EditText
         android:id="@+id/etSetProjectPLanguages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -101,20 +74,20 @@
         android:ems="10"
         android:hint="New project title." />
 
-    <TextView
-        android:id="@+id/tvTimeEstimate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/etDummyDistraction"
-        android:layout_centerHorizontal="true"
-        android:text="Estimate the total the number of additional Pomodoro's it wil take to complete this task:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
     <Spinner
         android:id="@+id/spTimeEstimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvTimeEstimate" />
+
+    <TextView
+        android:id="@+id/tvTimeEstimate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etSetProjectDescription"
+        android:text="Estimate the total the number of additional Pomodoro&apos;s it wil take to complete this task:"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

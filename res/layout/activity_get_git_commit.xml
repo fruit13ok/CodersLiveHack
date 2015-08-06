@@ -29,7 +29,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvGithubAccountLabel"
-        android:ems="10" >
+        android:ems="10"
+        android:text="fruit13ok" >
 
         <requestFocus />
     </EditText>
@@ -50,7 +51,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvGithubRepositoryLabel"
-        android:ems="10" />
+        android:ems="10"
+        android:text="CodersLiveHack" />
 
     <TextView
         android:id="@+id/tvNumOfGithobCommit"

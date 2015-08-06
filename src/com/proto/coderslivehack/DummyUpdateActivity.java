@@ -12,11 +12,13 @@ import android.widget.Toast;
 
 public class DummyUpdateActivity extends Activity
 {
-	String id, title, language, description, startTime, timeSpent, productivie, distraction;
+	String id, title, language, description, startTime, timeSpent, productivie, distraction, 
+		progress, estimation, comment;
 	
 	DBHelperAdapter dBHelperAdapter;
 	
-	EditText etId, etTitle, etLanguage, etDescription, etStartTime, etTimeSpent, etProductivie, etDistraction;
+	EditText etId, etTitle, etLanguage, etDescription, etStartTime, etTimeSpent, etProductivie, etDistraction, 
+		etProgress, etEstimation, etComment;
 	Button btnUpdate, btnDummyUpdateToHome, btnShowRow;
 	
 	TextView tvLookingAtThisRow;
@@ -35,6 +37,9 @@ public class DummyUpdateActivity extends Activity
 		timeSpent = "";
 		productivie = "";
 		distraction = "";
+		progress = "";
+		estimation = "";
+		comment = "";
 		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		
@@ -46,6 +51,9 @@ public class DummyUpdateActivity extends Activity
 		etTimeSpent = (EditText) findViewById(R.id.etTimeSpent);
 		etProductivie = (EditText) findViewById(R.id.etProductivie);
 		etDistraction = (EditText) findViewById(R.id.etDistraction);
+		etProgress = (EditText) findViewById(R.id.etProgress);
+		etEstimation = (EditText) findViewById(R.id.etEstimation);
+		etComment = (EditText) findViewById(R.id.etComment);
 		
 		tvLookingAtThisRow = (TextView) findViewById(R.id.tvLookingAtThisRow);
 		
@@ -63,9 +71,12 @@ public class DummyUpdateActivity extends Activity
 				timeSpent = etTimeSpent.getText().toString();
 				productivie = etProductivie.getText().toString();
 				distraction = etDistraction.getText().toString();
+				progress = etProgress.getText().toString();
+				estimation = etEstimation.getText().toString();
+				comment = etComment.getText().toString();
 				
 				int count = dBHelperAdapter.updateARowById(id, title, language, description, 
-						startTime, timeSpent, productivie, distraction);
+						startTime, timeSpent, productivie, distraction, progress, estimation, comment);
 				Toast.makeText(getApplicationContext(), count + " row updated, id = " + id, Toast.LENGTH_SHORT).show();
 			}
 		});

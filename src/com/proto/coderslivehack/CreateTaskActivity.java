@@ -37,12 +37,9 @@ public class CreateTaskActivity extends Activity
 	
 	DBHelperAdapter dBHelperAdapter;
 	
-	// TODO: delete these 2 edittext start date and grade later, they are just dummy
-	EditText etDummyStartDate, etDummyGrade, etDummyDistraction;
-	
 	Spinner spEstimation;
 	ArrayAdapter<CharSequence> aaEstimation;
-	String mEstimationValue;
+	String projectTitle, programmingLanguages, projectDescription, mEstimationValue;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -53,10 +50,6 @@ public class CreateTaskActivity extends Activity
 		etSetProjectTitle = (EditText) findViewById(R.id.etSetProjectTitle);
 		etSetProjectPLanguages = (EditText) findViewById(R.id.etSetProjectPLanguages);
 		etSetProjectDescription = (EditText) findViewById(R.id.etSetProjectDescription);
-		
-		etDummyStartDate = (EditText) findViewById(R.id.etDummyStartDate);
-		etDummyGrade = (EditText) findViewById(R.id.etDummyGrade);
-		etDummyDistraction = (EditText) findViewById(R.id.etDummyDistraction);
 		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		
@@ -88,23 +81,20 @@ public class CreateTaskActivity extends Activity
 			{
 				// TODO:
 				// add to database stuffs
-				String projectTitle = etSetProjectTitle.getText().toString();
-				String programmingLanguages = etSetProjectPLanguages.getText().toString();
-				String projectDescription = etSetProjectDescription.getText().toString();
+				projectTitle = etSetProjectTitle.getText().toString();
+				programmingLanguages = etSetProjectPLanguages.getText().toString();
+				projectDescription = etSetProjectDescription.getText().toString();
 				
-				String startDate = etDummyStartDate.getText().toString();
-				String grade = etDummyGrade.getText().toString();
-				String distraction = etDummyDistraction.getText().toString();
-				
-				long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, projectDescription, 
-						startDate, grade, distraction);
+				long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, 
+						projectDescription, mEstimationValue);
+
 				
 				//TODO: see top of page
 				/**
 				 * Added a call to insert the estimation Value into database
 				 *      when the user presses btnAddProjectToDB.
 				 */
-				dBHelperAdapter.insert_EstimationValue(projectTitle,mEstimationValue);
+//				dBHelperAdapter.insert_EstimationValue(projectTitle,mEstimationValue);
 				
 				if(id < 0)
 				{
@@ -112,7 +102,8 @@ public class CreateTaskActivity extends Activity
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "successful inserted a project", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), "successful inserted a project", 
+							Toast.LENGTH_LONG).show();
 				}
 				
 				// TODO:

@@ -38,14 +38,16 @@ public class SelectTaskActivity extends Activity
 		
 		// populate the alProjectList by query the database
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
-		String strAllData = dBHelperAdapter.getAllData();
+//		String strAllData = dBHelperAdapter.getAllData();
+		String strAllData = dBHelperAdapter.getAllDataNotComplete();
 		final String[] arrAllData = strAllData.split("\\n");
 		alProjectList = new ArrayList<String>(Arrays.asList(arrAllData));
 		
 		lvProjectList = (ListView) findViewById(R.id.lvProjectList);
 		if(!alProjectList.isEmpty())
 		{
-			aaProjectList = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, alProjectList);
+			aaProjectList = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, 
+					alProjectList);
 		}
 		else
 		{
@@ -81,16 +83,27 @@ public class SelectTaskActivity extends Activity
 				// if user not select any task or selected the completed task toast to use.
 				// for now only select incomplete task can go to timer, (talk to Joel to confirm).
 				Intent selectTaskToTimerIntent = new Intent(getBaseContext(), TimerActivity.class);
+				// TODO: after most this app done, should not allow user go to timer without select valid project.
 				if(selectedTask.isEmpty())
 				{
-					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "nothing projected");
+					Toast.makeText(getApplicationContext(), "no project select", Toast.LENGTH_LONG).show();
+//					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "no project select");
+//					startActivity(selectTaskToTimerIntent);
+//					finish();
 				}
+//				else if(isCompleteOrAbandon())
+//				{
+//					// later just toast
+//					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "project has complete or abandon");
+//					startActivity(selectTaskToTimerIntent);
+//					finish();
+//				}
 				else
 				{
 					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, selectedTask);
+					startActivity(selectTaskToTimerIntent);
+					finish();
 				}
-				startActivity(selectTaskToTimerIntent);
-				finish();
 			}
 		});
 		
@@ -118,4 +131,11 @@ public class SelectTaskActivity extends Activity
 			}
 		});
 	}
+	
+//	public boolean isCompleteOrAbandon()
+//	{
+//		String projectTitle = selectedTask.split(" ")[1];
+//		String projectProgress = dBHelperAdapter.getProjectProgress(projectTitle);
+//		return (projectProgress.equalsIgnoreCase("completed") || projectProgress.equalsIgnoreCase("abandoned"));
+//	}
 }
