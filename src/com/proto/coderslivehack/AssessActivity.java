@@ -43,28 +43,9 @@ public class AssessActivity extends Activity
         //Get the current name of the project for inserting values into the database
         Intent fromTimerTask = getIntent();
         mCurrProject = fromTimerTask.getStringExtra("SELECTED_PROJECT");
-		projectInfo = mCurrProject.split(" ");
-
-
-		StringBuilder stringBuilder = new StringBuilder();
-        String programLanguage = "java";
-        String value = "";
-        int index = 1;
-
-		//Currently chopping off rest of string based on programming language,
-		//add note: add unique char between project "name"
-		//known bug if user does not select task but starts self-assessment program will crash
-
-		while (value.compareToIgnoreCase(programLanguage) != 0)
-		{
-			stringBuilder.append(" " + value);
-			value = projectInfo[index].toString();
-			index++;
-		}
-
-		//the users current project name
-		mCurrProject = stringBuilder.toString().trim();
-
+		projectInfo = mCurrProject.split("\\|");
+		
+		mCurrProject = projectInfo[1];
 
 		spDistraction = (Spinner) findViewById(R.id.spDistraction);
 		aaDistraction = ArrayAdapter.createFromResource(this,
@@ -118,10 +99,10 @@ public class AssessActivity extends Activity
 
 
 		btnAssessToHome = (Button) findViewById(R.id.btnAssessToHome);
-		btnAssessToHome.setVisibility(View.GONE);
+//		btnAssessToHome.setVisibility(View.GONE);
 		
 		btnAssessToGraph = (Button) findViewById(R.id.btnAssessToGraph);
-		btnAssessToGraph.setVisibility(View.GONE);
+//		btnAssessToGraph.setVisibility(View.GONE);
 		
 		btnSubmitToDB = (Button) findViewById(R.id.btnSubmitToDB);
 		btnSubmitToDB.setOnClickListener(new OnClickListener()
@@ -151,8 +132,8 @@ public class AssessActivity extends Activity
 						"Task Comment Value entered into DB : " + mDBHelperAdapter.get_TaskComment(mCurrProject),
 						Toast.LENGTH_SHORT).show();
 
-				btnAssessToHome.setVisibility(View.VISIBLE);
-				btnAssessToGraph.setVisibility(View.VISIBLE);
+//				btnAssessToHome.setVisibility(View.VISIBLE);
+//				btnAssessToGraph.setVisibility(View.VISIBLE);
 			}
 		});
 		btnAssessToHome.setOnClickListener(new OnClickListener()

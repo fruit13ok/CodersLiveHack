@@ -13,12 +13,12 @@ import android.widget.Toast;
 public class DummyUpdateActivity extends Activity
 {
 	String id, title, language, description, startTime, timeSpent, productivie, distraction, 
-		progress, estimation, comment;
+		progress, comment;
 	
 	DBHelperAdapter dBHelperAdapter;
 	
 	EditText etId, etTitle, etLanguage, etDescription, etStartTime, etTimeSpent, etProductivie, etDistraction, 
-		etProgress, etEstimation, etComment;
+		etProgress, etComment;
 	Button btnUpdate, btnDummyUpdateToHome, btnShowRow;
 	
 	TextView tvLookingAtThisRow;
@@ -38,7 +38,6 @@ public class DummyUpdateActivity extends Activity
 		productivie = "";
 		distraction = "";
 		progress = "";
-		estimation = "";
 		comment = "";
 		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
@@ -52,7 +51,6 @@ public class DummyUpdateActivity extends Activity
 		etProductivie = (EditText) findViewById(R.id.etProductivie);
 		etDistraction = (EditText) findViewById(R.id.etDistraction);
 		etProgress = (EditText) findViewById(R.id.etProgress);
-		etEstimation = (EditText) findViewById(R.id.etEstimation);
 		etComment = (EditText) findViewById(R.id.etComment);
 		
 		tvLookingAtThisRow = (TextView) findViewById(R.id.tvLookingAtThisRow);
@@ -72,11 +70,10 @@ public class DummyUpdateActivity extends Activity
 				productivie = etProductivie.getText().toString();
 				distraction = etDistraction.getText().toString();
 				progress = etProgress.getText().toString();
-				estimation = etEstimation.getText().toString();
 				comment = etComment.getText().toString();
 				
 				int count = dBHelperAdapter.updateARowById(id, title, language, description, 
-						startTime, timeSpent, productivie, distraction, progress, estimation, comment);
+						startTime, timeSpent, productivie, distraction, progress, comment);
 				Toast.makeText(getApplicationContext(), count + " row updated, id = " + id, Toast.LENGTH_SHORT).show();
 			}
 		});

@@ -74,20 +74,4 @@
         android:ems="10"
         android:hint="New project title." />
 
-    <Spinner
-        android:id="@+id/spTimeEstimation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvTimeEstimate" />
-
-    <TextView
-        android:id="@+id/tvTimeEstimate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etSetProjectDescription"
-        android:text="Estimate the total the number of additional Pomodoro&apos;s it wil take to complete this task:"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
 </RelativeLayout>

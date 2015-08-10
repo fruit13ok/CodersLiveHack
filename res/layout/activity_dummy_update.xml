@@ -64,7 +64,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etDummyGrade"
         android:ems="10"
-        android:hint="short project description"
+        android:hint="project description"
         android:imeOptions="actionNext"
         android:inputType="text" />
 
@@ -97,7 +97,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etTimeSpent"
         android:ems="10"
-        android:hint="amount of productive 0 - 5"
+        android:hint="productiveness 0 - 5"
         android:imeOptions="actionNext"
         android:inputType="text" />
 
@@ -108,7 +108,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etProductivie"
         android:ems="10"
-        android:hint="amount of distraction 0 - 4"
+        android:hint="distraction 0 - 4"
         android:imeOptions="actionNext"
         android:inputType="text" />
 
@@ -119,30 +119,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etDistraction"
         android:ems="10"
-        android:hint="not start / working on / completed / abandoned"
+        android:hint="not start / working on /\ncompleted / abandoned"
         android:imeOptions="actionNext"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/etEstimation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etProgress"
-        android:ems="10"
-        android:hint="estimation 0 - 7"
-        android:imeOptions="actionNext"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/etComment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/etEstimation"
-        android:ems="10"
-        android:hint="comment on estimation"
-        android:imeOptions="actionDone"
         android:inputType="text" />
 
     <TextView
@@ -162,5 +140,16 @@
         android:layout_alignParentRight="true"
         android:layout_below="@+id/btnUpdate"
         android:text="show row" />
+
+    <EditText
+        android:id="@+id/etComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/etProgress"
+        android:ems="10"
+        android:hint="comment"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
 
 </RelativeLayout>

@@ -260,7 +260,7 @@ public class GraphActivity extends Activity
 			
 			// default delimiter is already space
 			// I did not check empty token, just assume getting 2 tokens, should add checking later
-			stDateGrade = new StringTokenizer(strDBDateAndGradeRows[i]);
+			stDateGrade = new StringTokenizer(strDBDateAndGradeRows[i], "\\|");
 			oneDate = stringToDate(stDateGrade.nextElement().toString());
 			oneGrade = stDateGrade.nextElement().toString();
 			alDataPoints.add(new DataPoint(oneDate, Double.parseDouble(oneGrade)));
@@ -280,7 +280,7 @@ public class GraphActivity extends Activity
 		String oneDistraction = null;
 		for (int i = 0; i < strDBDateAndDistractionRows.length; i++)
 		{
-			stDateDistraction = new StringTokenizer(strDBDateAndDistractionRows[i]);
+			stDateDistraction = new StringTokenizer(strDBDateAndDistractionRows[i], "\\|");
 			oneDate = stringToDate(stDateDistraction.nextElement().toString());
 			oneDistraction = stDateDistraction.nextElement().toString();
 			alDataPoints.add(new DataPoint(oneDate, Double.parseDouble(oneDistraction)));
@@ -386,7 +386,7 @@ public class GraphActivity extends Activity
 //		        
 //		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
 //		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | est | com\n" + 
+//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | com\n" + 
 //		        		DataWholeRow + "\n" + strDBDateAndGrades);
 //		    }
 //		});
@@ -407,33 +407,36 @@ public class GraphActivity extends Activity
                         "date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
 
                 dataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, "" + (int) dataPoint.getY(),"|");
-
+                System.out.println("mytab: test1 " + dataWholeRow);
                 String[] allData = dataWholeRow.split("\\|");
+                System.out.println("mytab: test2 "+allData.length);
                 String projectTitle = allData[1];
                 String projectLanguage = allData[2];
                 String description = allData[3];
+                String startDate = allData[4];
                 String timeSpent = allData[5];
+                String grade = allData[6];
                 String distractionLevel = allData[7];
                 String finalProgress = allData[8];
-                String estimationVal = allData[9];
-                String comments = allData[10];
-
-                if(description.length() <= 1)
+                String comments = allData[9];
+                
+//                if(description.length() <= 1)
+                if(description.isEmpty() || description == null)
                 {
                     description = "No Project description found";
                 }
 
-                if(comments.length() >= 1 && comments != null)
+//                if(comments.length() >= 1 && comments != null)
+                if(comments.isEmpty() || comments == null)
                 {
-                    Toast.makeText(getApplicationContext(),
-                            "Comments: " + comments.length() , Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(),
+//                            "Comments: " + comments.length() , Toast.LENGTH_SHORT).show();
                     comments = "No Project Comments found ";
                 }
-
-                tvSelectedProjectInfo.setText("Title: " + projectTitle + " | " + "Date: " + s
+                
+                tvSelectedProjectInfo.setText("Title: " + projectTitle + " | " + "Start Date: " + s
                         + " | "+ "Language: " + projectLanguage + " | " + "Grade: " + dataPoint.getY()
-                        + "\n" + "Estimation Time Spent: " + estimationVal + " | "
-                        + "Time Spent: " + timeSpent + " | " + "Distraction: " + distractionLevel
+                        + "\n" + "Time Spent: " + timeSpent + " | " + "Distraction: " + distractionLevel
                         + " | " + "Final Progress: " + finalProgress
                         + "\n" + "scroll for Description and Comments..."
                         + "\n" + "\n" + "Description:\n" + description
@@ -472,7 +475,7 @@ public class GraphActivity extends Activity
 //		        
 //		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
 //		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | est | com\n" + 
+//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | com\n" + 
 //		        		DataWholeRow + "\n" + strDBDateAndGrades);
 //		    }
 //		});

@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@+id/btnSelectProjectToWork"
-        android:layout_below="@+id/tvDataHeaderSelectTask"
+        android:layout_below="@+id/llProgressColorCode"
         android:layout_centerHorizontal="true" >
 
     </ListView>
@@ -31,15 +31,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Home" />
-
-    <TextView
-        android:id="@+id/tvDataHeaderSelectTask"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvSelectTaskLabel"
-        android:layout_centerHorizontal="true"
-        android:text="id | title | lang | des | start | spent | prod | dist | prog | est | com"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
         android:id="@+id/tvSelectTaskLabel"
@@ -58,5 +49,45 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="dummy update" />
+
+    <LinearLayout
+        android:id="@+id/llProgressColorCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSelectTaskLabel"
+        android:layout_centerHorizontal="true"
+        android:weightSum="3" >
+
+        <TextView
+            android:id="@+id/tvDoneColorGreen"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="DONE"
+            android:gravity="center"
+            android:background="#7CFC00"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvUngradeColorYellow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="UNGRADE"
+            android:gravity="center"
+            android:background="#ffff00"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tvDoThereColorRed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:text="DO THESE"
+            android:gravity="center"
+            android:background="#ff0000"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_weight="1" />
+
+    </LinearLayout>
 
 </RelativeLayout>

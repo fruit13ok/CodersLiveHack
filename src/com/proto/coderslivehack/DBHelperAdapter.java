@@ -8,8 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-// TODO:
-// after finish code merge add a query to get ESTIMATION_LEVEL include it in display whole data 
+
 /*
  * TODO: currently just try to make a temp database, database need to change later
  * 
@@ -30,7 +29,6 @@ import android.widget.Toast;
 *      ,because these are all new methods:
 *
 * 	public long insert_DistractionLevel(String project_Title,String distractionValue)
-* 	public long insert_EstimationValue(String project_Title,String estimationValue)
 * 	public long insert_ProductivityValues(String project_Title,String productivityValues)
 * 	public long insert_TaskComments(String project_Title,String taskCommentsValues)
 * 	public String get_TaskComment(String project_Title)
@@ -47,7 +45,6 @@ import android.widget.Toast;
  *     CREATE_TABLE string value, so copy and replace CREATE_TABLE
  *     string value. Remember to update Database version number for added columns.
  *
- * 	private static final String ESTIMATION_LEVEL = "estimationLevel";
  * 	private static final String TASK_COMMENTS = "taskComments";
  *
  * 	After these changes that completes all changes needed for DBHelperAdapter.java file
@@ -70,7 +67,7 @@ public class DBHelperAdapter
 	// when work on timer and assessment make update for startDate and grade later
 	// now only use by CreateTaskActivity
 	// use to insert data to database, return inserted row id or -1 for fail to insert
-	public long insertData(String projectTitle, String programmingLanguages, String projectDescription, String estimationValue)
+	public long insertData(String projectTitle, String programmingLanguages, String projectDescription)
 //			 String startDate, String grade, String distraction)
 	{
 		// need SQLiteDatabase object to point to your database before you can do anything
@@ -85,8 +82,6 @@ public class DBHelperAdapter
 			contentValues.put(DBHelper.PROGRAMMING_LANGUAGES, programmingLanguages);
 		if(!projectDescription.isEmpty())
 			contentValues.put(DBHelper.PROJECT_DESCRIPTION, projectDescription);
-		if(!estimationValue.isEmpty())
-			contentValues.put(DBHelper.ESTIMATION_LEVEL, estimationValue);
 //		if(!startDate.isEmpty())
 //			contentValues.put(DBHelper.START_TIME, startDate);
 //		if(!grade.isEmpty())
@@ -125,16 +120,6 @@ public class DBHelperAdapter
 		return db.update(DBHelper.TABLE_NAME,
 				contentValues, DBHelper.PROJECT_TITLE + "=?", whereArgs);
 	}
-
-//	public long insert_EstimationValue(String project_Title,String estimationValue)
-//	{
-//		SQLiteDatabase db = dBHelper.getWritableDatabase();
-//		ContentValues contentValues = new ContentValues();
-//		contentValues.put(DBHelper.ESTIMATION_LEVEL, estimationValue);
-//		String[] whereArgs={project_Title};
-//		return db.update(DBHelper.TABLE_NAME,
-//				contentValues, DBHelper.PROJECT_TITLE + "=?", whereArgs);
-//	}
 
 	public long insert_ProductivityValues(String project_Title,String productivityValues)
 	{
@@ -189,7 +174,7 @@ public class DBHelperAdapter
 	// dummy update the row by match id, use by developer only, delete it later
 	public int updateARowById(String mId, String mTitle, String mLanguage, String mDescription, 
 			String mStartTime, String mTimeSpent, String mProductivie, String mDistraction, 
-			String mProgress, String mEstimation, String mComment)
+			String mProgress, String mComment)
 	{
 		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
@@ -209,8 +194,6 @@ public class DBHelperAdapter
 			contentValues.put(DBHelper.DISTRACTION_LEVEL, mDistraction);
 		if(!mProgress.isEmpty())
 			contentValues.put(DBHelper.PROJECT_PROGRESS, mProgress);
-		if(!mEstimation.isEmpty())
-			contentValues.put(DBHelper.ESTIMATION_LEVEL, mEstimation);
 		if(!mComment.isEmpty())
 			contentValues.put(DBHelper.TASK_COMMENTS, mComment);
 		
@@ -379,12 +362,16 @@ public class DBHelperAdapter
                 DBHelper.PROGRAMMING_LANGUAGES, DBHelper.PROJECT_DESCRIPTION,
                 DBHelper.START_TIME, DBHelper.TIME_SPENT, DBHelper.PRODUCTIVE_LEVEL,
                 DBHelper.DISTRACTION_LEVEL, DBHelper.PROJECT_PROGRESS,
-                DBHelper.ESTIMATION_LEVEL, DBHelper.TASK_COMMENTS};
+                DBHelper.TASK_COMMENTS};
         // match condition values
         String[] selectionArgs = {"%" + mDate + "%", "%" + mGrade + "%"};
+//        Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns,
+//                DBHelper.START_TIME + " LIKE ? AND " + DBHelper.PRODUCTIVE_LEVEL + " LIKE ?",
+//                selectionArgs, null, null, null, null);
         Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns,
                 DBHelper.START_TIME + " LIKE ? AND " + DBHelper.PRODUCTIVE_LEVEL + " LIKE ?",
-                selectionArgs, null, null, null, null);
+                selectionArgs, null, null, DBHelper.START_TIME + " ASC", null);
+        
         StringBuffer stringBuffer = new StringBuffer();
         while(cursor.moveToNext())
         {
@@ -406,66 +393,65 @@ public class DBHelperAdapter
             String distractionLevel = cursor.getString(distractionLevelColIndex);
             int projectProgressColIndex = cursor.getColumnIndex(DBHelper.PROJECT_PROGRESS);
             String projectProgress = cursor.getString(projectProgressColIndex);
-            int estimationLevelColIndex = cursor.getColumnIndex(DBHelper.ESTIMATION_LEVEL);
-            String estimationLevel = cursor.getString(estimationLevelColIndex);
             int taskCommentsColIndex = cursor.getColumnIndex(DBHelper.TASK_COMMENTS);
             String taskComments = cursor.getString(taskCommentsColIndex);
 
             stringBuffer.append(id + delimiter + projectTitle + delimiter + programmingLanguages + 
             		delimiter + projectDescription + delimiter + startTime + delimiter + timeSpent + 
             		delimiter + productiveLevel + delimiter + distractionLevel + delimiter + 
-            		projectProgress + delimiter + estimationLevel + delimiter + taskComments + "\n");
+            		projectProgress + delimiter + taskComments + "\n");
         }
         return stringBuffer.toString();
     }
 	
-	public String getAllDataNotComplete()
-	{
-		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
-
-		String[] columns = {DBHelper.ID, DBHelper.PROJECT_TITLE, 
-				DBHelper.PROGRAMMING_LANGUAGES, DBHelper.PROJECT_DESCRIPTION,
-				DBHelper.START_TIME, DBHelper.TIME_SPENT, DBHelper.PRODUCTIVE_LEVEL, 
-				DBHelper.DISTRACTION_LEVEL, DBHelper.PROJECT_PROGRESS, 
-				DBHelper.ESTIMATION_LEVEL, DBHelper.TASK_COMMENTS};
-//		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
-		String[] selectionArgs = {"%completed%", "%abandoned%"};
-		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
-				DBHelper.START_TIME + " NOT LIKE ? OR " + DBHelper.PRODUCTIVE_LEVEL + " NOT LIKE ?", 
-				selectionArgs, null, null, null, null);
-		
-		StringBuffer stringBuffer = new StringBuffer();
-		while(cursor.moveToNext())
-		{
-			int idColIndex = cursor.getColumnIndex(DBHelper.ID);
-			int id = cursor.getInt(idColIndex);
-			int projectTitleColIndex = cursor.getColumnIndex(DBHelper.PROJECT_TITLE);
-			String projectTitle = cursor.getString(projectTitleColIndex);
-			int programmingLanguagesColIndex = cursor.getColumnIndex(DBHelper.PROGRAMMING_LANGUAGES);
-			String programmingLanguages = cursor.getString(programmingLanguagesColIndex);
-			int projectDescriptionColIndex = cursor.getColumnIndex(DBHelper.PROJECT_DESCRIPTION);
-			String projectDescription = cursor.getString(projectDescriptionColIndex);
-			int startTimeColIndex = cursor.getColumnIndex(DBHelper.START_TIME);
-			String startTime = cursor.getString(startTimeColIndex);
-			int timeSpentColIndex = cursor.getColumnIndex(DBHelper.TIME_SPENT);
-			String timeSpent = cursor.getString(timeSpentColIndex);
-			int productiveLevelColIndex = cursor.getColumnIndex(DBHelper.PRODUCTIVE_LEVEL);
-			String productiveLevel = cursor.getString(productiveLevelColIndex);
-			int distractionLevelColIndex = cursor.getColumnIndex(DBHelper.DISTRACTION_LEVEL);
-			String distractionLevel = cursor.getString(distractionLevelColIndex);
-			int projectProgressColIndex = cursor.getColumnIndex(DBHelper.PROJECT_PROGRESS);
-			String projectProgress = cursor.getString(projectProgressColIndex);
-			int estimationLevelColIndex = cursor.getColumnIndex(DBHelper.ESTIMATION_LEVEL);
-			String estimationLevel = cursor.getString(estimationLevelColIndex);
-			int taskCommentsColIndex = cursor.getColumnIndex(DBHelper.TASK_COMMENTS);
-			String taskComments = cursor.getString(taskCommentsColIndex);
-					
-			stringBuffer.append(id + " " + projectTitle + " " + programmingLanguages + " " + 
-					projectDescription + " " + startTime + " " + timeSpent + " " + productiveLevel + " " + 
-					distractionLevel + " " + projectProgress + " " + estimationLevel + " " + taskComments + "\n");
-		}
-		return stringBuffer.toString();
-	}
+	// not using it, I use other way
+	// it is wrong query
+//	public String getAllDataNotComplete()
+//	{
+//		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
+//
+//		String[] columns = {DBHelper.ID, DBHelper.PROJECT_TITLE, 
+//				DBHelper.PROGRAMMING_LANGUAGES, DBHelper.PROJECT_DESCRIPTION,
+//				DBHelper.START_TIME, DBHelper.TIME_SPENT, DBHelper.PRODUCTIVE_LEVEL, 
+//				DBHelper.DISTRACTION_LEVEL, DBHelper.PROJECT_PROGRESS, 
+//				DBHelper.ESTIMATION_LEVEL, DBHelper.TASK_COMMENTS};
+//		String[] selectionArgs = {"%completed%", "%abandoned%"};
+//		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
+//				DBHelper.PROJECT_PROGRESS + " NOT LIKE ? OR " + DBHelper.PROJECT_PROGRESS + " NOT LIKE ?", 
+//				selectionArgs, null, null, null, null);
+//		
+//		StringBuffer stringBuffer = new StringBuffer();
+//		while(cursor.moveToNext())
+//		{
+//			int idColIndex = cursor.getColumnIndex(DBHelper.ID);
+//			int id = cursor.getInt(idColIndex);
+//			int projectTitleColIndex = cursor.getColumnIndex(DBHelper.PROJECT_TITLE);
+//			String projectTitle = cursor.getString(projectTitleColIndex);
+//			int programmingLanguagesColIndex = cursor.getColumnIndex(DBHelper.PROGRAMMING_LANGUAGES);
+//			String programmingLanguages = cursor.getString(programmingLanguagesColIndex);
+//			int projectDescriptionColIndex = cursor.getColumnIndex(DBHelper.PROJECT_DESCRIPTION);
+//			String projectDescription = cursor.getString(projectDescriptionColIndex);
+//			int startTimeColIndex = cursor.getColumnIndex(DBHelper.START_TIME);
+//			String startTime = cursor.getString(startTimeColIndex);
+//			int timeSpentColIndex = cursor.getColumnIndex(DBHelper.TIME_SPENT);
+//			String timeSpent = cursor.getString(timeSpentColIndex);
+//			int productiveLevelColIndex = cursor.getColumnIndex(DBHelper.PRODUCTIVE_LEVEL);
+//			String productiveLevel = cursor.getString(productiveLevelColIndex);
+//			int distractionLevelColIndex = cursor.getColumnIndex(DBHelper.DISTRACTION_LEVEL);
+//			String distractionLevel = cursor.getString(distractionLevelColIndex);
+//			int projectProgressColIndex = cursor.getColumnIndex(DBHelper.PROJECT_PROGRESS);
+//			String projectProgress = cursor.getString(projectProgressColIndex);
+//			int estimationLevelColIndex = cursor.getColumnIndex(DBHelper.ESTIMATION_LEVEL);
+//			String estimationLevel = cursor.getString(estimationLevelColIndex);
+//			int taskCommentsColIndex = cursor.getColumnIndex(DBHelper.TASK_COMMENTS);
+//			String taskComments = cursor.getString(taskCommentsColIndex);
+//					
+//			stringBuffer.append(id + " " + projectTitle + " " + programmingLanguages + " " + 
+//					projectDescription + " " + startTime + " " + timeSpent + " " + productiveLevel + " " + 
+//					distractionLevel + " " + projectProgress + " " + estimationLevel + " " + taskComments + "\n");
+//		}
+//		return stringBuffer.toString();
+//	}
 	
 	// display / query all data
 	public String getAllData()
@@ -488,7 +474,7 @@ public class DBHelperAdapter
 				DBHelper.PROGRAMMING_LANGUAGES, DBHelper.PROJECT_DESCRIPTION,
 				DBHelper.START_TIME, DBHelper.TIME_SPENT, DBHelper.PRODUCTIVE_LEVEL, 
 				DBHelper.DISTRACTION_LEVEL, DBHelper.PROJECT_PROGRESS, 
-				DBHelper.ESTIMATION_LEVEL, DBHelper.TASK_COMMENTS};
+				DBHelper.TASK_COMMENTS};
 		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
 		// use to store the database by append each cells to it separate by space, and each row separate by newline
 		StringBuffer stringBuffer = new StringBuffer();
@@ -519,14 +505,12 @@ public class DBHelperAdapter
 			String distractionLevel = cursor.getString(distractionLevelColIndex);
 			int projectProgressColIndex = cursor.getColumnIndex(DBHelper.PROJECT_PROGRESS);
 			String projectProgress = cursor.getString(projectProgressColIndex);
-			int estimationLevelColIndex = cursor.getColumnIndex(DBHelper.ESTIMATION_LEVEL);
-			String estimationLevel = cursor.getString(estimationLevelColIndex);
 			int taskCommentsColIndex = cursor.getColumnIndex(DBHelper.TASK_COMMENTS);
 			String taskComments = cursor.getString(taskCommentsColIndex);
 					
-			stringBuffer.append(id + " " + projectTitle + " " + programmingLanguages + " " + 
-					projectDescription + " " + startTime + " " + timeSpent + " " + productiveLevel + " " + 
-					distractionLevel + " " + projectProgress + " " + estimationLevel + " " + taskComments + "\n");
+			stringBuffer.append(id + "|" + projectTitle + "|" + programmingLanguages + "|" + 
+					projectDescription + "|" + startTime + "|" + timeSpent + "|" + productiveLevel + "|" + 
+					distractionLevel + "|" + projectProgress+ "|" + taskComments + "\n");
 		}
 		return stringBuffer.toString();
 	}
@@ -538,7 +522,7 @@ public class DBHelperAdapter
 				DBHelper.PROGRAMMING_LANGUAGES, DBHelper.PROJECT_DESCRIPTION,
 				DBHelper.START_TIME, DBHelper.TIME_SPENT, DBHelper.PRODUCTIVE_LEVEL, 
 				DBHelper.DISTRACTION_LEVEL, DBHelper.PROJECT_PROGRESS, 
-				DBHelper.ESTIMATION_LEVEL, DBHelper.TASK_COMMENTS};
+				DBHelper.TASK_COMMENTS};
 		String[] selectionArgs = {mId};
 		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
 				DBHelper.ID + " =?", selectionArgs, null, null, null, null);
@@ -563,14 +547,12 @@ public class DBHelperAdapter
 			String distractionLevel = cursor.getString(distractionLevelColIndex);
 			int projectProgressColIndex = cursor.getColumnIndex(DBHelper.PROJECT_PROGRESS);
 			String projectProgress = cursor.getString(projectProgressColIndex);
-			int estimationLevelColIndex = cursor.getColumnIndex(DBHelper.ESTIMATION_LEVEL);
-			String estimationLevel = cursor.getString(estimationLevelColIndex);
 			int taskCommentsColIndex = cursor.getColumnIndex(DBHelper.TASK_COMMENTS);
 			String taskComments = cursor.getString(taskCommentsColIndex);
 			
-			stringBuffer.append(id + " " + projectTitle + " " + programmingLanguages + " " + 
-					projectDescription + " " + startTime + " " + timeSpent + " " + productiveLevel + " " + 
-					distractionLevel + " " + projectProgress + " " + estimationLevel + " " + taskComments + "\n");
+			stringBuffer.append(id + "|" + projectTitle + "|" + programmingLanguages + "|" + 
+					projectDescription + "|" + startTime + "|" + timeSpent + "|" + productiveLevel + "|" + 
+					distractionLevel + "|" + projectProgress + "|" + taskComments + "\n");
 		}
 		return stringBuffer.toString();
 	}
@@ -589,8 +571,11 @@ public class DBHelperAdapter
 		String[] columns = {DBHelper.START_TIME, DBHelper.PRODUCTIVE_LEVEL};
 		// match condition values
 		String[] selectionArgs = {"%" + mProgLanguage + "%"};
+//		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
+//				DBHelper.PROGRAMMING_LANGUAGES + " LIKE ?", selectionArgs, null, null, null, null);
 		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
-				DBHelper.PROGRAMMING_LANGUAGES + " LIKE ?", selectionArgs, null, null, null, null);
+				DBHelper.PROGRAMMING_LANGUAGES + " LIKE ?", selectionArgs, null, null, 
+				DBHelper.START_TIME + " ASC", null);
 		StringBuffer stringBuffer = new StringBuffer();
 		while(cursor.moveToNext())
 		{
@@ -600,7 +585,7 @@ public class DBHelperAdapter
 			String productiveLevel = cursor.getString(productiveLevelColIndex);
 			
 			if(productiveLevel != null)
-				stringBuffer.append(startTime + " " + productiveLevel + "\n");
+				stringBuffer.append(startTime + "|" + productiveLevel + "\n");
 		}
 		return stringBuffer.toString();
 	}
@@ -612,8 +597,11 @@ public class DBHelperAdapter
 		String[] columns = {DBHelper.START_TIME, DBHelper.DISTRACTION_LEVEL};
 		// match condition values
 		String[] selectionArgs = {"%" + mProgLanguage + "%"};
+//		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
+//				DBHelper.PROGRAMMING_LANGUAGES + " LIKE ?", selectionArgs, null, null, null, null);
 		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, 
-				DBHelper.PROGRAMMING_LANGUAGES + " LIKE ?", selectionArgs, null, null, null, null);
+				DBHelper.PROGRAMMING_LANGUAGES + " LIKE ?", selectionArgs, null, null, 
+				DBHelper.START_TIME + " ASC", null);
 		StringBuffer stringBuffer = new StringBuffer();
 		while(cursor.moveToNext())
 		{
@@ -623,7 +611,7 @@ public class DBHelperAdapter
 			String distractionLevel = cursor.getString(distractionLevelColIndex);
 			
 			if(distractionLevel != null)
-				stringBuffer.append(startTime + " " + distractionLevel + "\n");
+				stringBuffer.append(startTime + "|" + distractionLevel + "\n");
 		}
 		return stringBuffer.toString();
 	}
@@ -632,7 +620,9 @@ public class DBHelperAdapter
 	{
 		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
 		String[] columns = {DBHelper.START_TIME, DBHelper.PRODUCTIVE_LEVEL};
-		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+//		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, 
+				DBHelper.START_TIME + " ASC", null);
 		StringBuffer stringBuffer = new StringBuffer();
 		while(cursor.moveToNext())
 		{
@@ -642,7 +632,7 @@ public class DBHelperAdapter
 			String productiveLevel = cursor.getString(productiveLevelColIndex);
 			
 			if(productiveLevel != null)
-				stringBuffer.append(startTime + " " + productiveLevel + "\n");
+				stringBuffer.append(startTime + "|" + productiveLevel + "\n");
 		}
 		return stringBuffer.toString();
 	}
@@ -651,7 +641,9 @@ public class DBHelperAdapter
 	{
 		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
 		String[] columns = {DBHelper.START_TIME, DBHelper.DISTRACTION_LEVEL};
-		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+//		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, 
+				DBHelper.START_TIME + " ASC", null);
 		StringBuffer stringBuffer = new StringBuffer();
 		while(cursor.moveToNext())
 		{
@@ -661,7 +653,7 @@ public class DBHelperAdapter
 			String distractionLevel = cursor.getString(distractionLevelColIndex);
 			
 			if(distractionLevel != null)
-				stringBuffer.append(startTime + " " + distractionLevel + "\n");
+				stringBuffer.append(startTime + "|" + distractionLevel + "\n");
 		}
 		return stringBuffer.toString();
 	}
@@ -691,7 +683,6 @@ public class DBHelperAdapter
 		private static final String PRODUCTIVE_LEVEL = "productiveLevel";
 		private static final String PROJECT_PROGRESS = "projectProgress";
 		private static final String DISTRACTION_LEVEL = "distractionLevel";
-		private static final String ESTIMATION_LEVEL = "estimationLevel";
 		private static final String TASK_COMMENTS = "taskComments";
 		
 		// TODO:
@@ -709,8 +700,7 @@ public class DBHelperAdapter
 				PRODUCTIVE_LEVEL + " VARCHAR(255), " + 
 				PROJECT_PROGRESS  + " VARCHAR(255), " + 
 				DISTRACTION_LEVEL + " VARCHAR(255), " + 
-				TASK_COMMENTS + " VARCHAR(255)," +
-				ESTIMATION_LEVEL + " VARCHAR(255));";
+				TASK_COMMENTS + " VARCHAR(255));";
 		
 		private static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 		

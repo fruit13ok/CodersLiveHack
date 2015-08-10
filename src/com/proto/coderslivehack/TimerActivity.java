@@ -27,16 +27,18 @@ import android.widget.TextView;
  */
 public class TimerActivity extends Activity
 {
-	String selectedProject, currentProjectTitle;
+	String selectedProject, curProjTitle, curProjLanguage, curProjDescription, curProjStartDate, 
+		curProjTimeSpent, curProjProgress, curProjGrade, curProjDistraction;
 	TextView tvSelectedProject, tvWorkOrBreakTime, tvTimer, tvAccumulatedTimeSpent;
 	Button btnStartTimer, btnPauseTimer, btnResumeTimer, btnStopTimer, 
 		btnMarkProjectComplete, btnMarkProjectAbandon, btnTimerToHome, btnTimerToAssess;
 	
 	long countDownInterval, workTime1, workTime2, breakTime1, breakTime2, workTimeRemain;
 	/**
-	 * <b>accumulatedTimeSpent</b> and <b>stoppingPoint</b> measure in second <b><ins><i>NOT</i></ins></b> millisecond
+	 * <b>accumulatedTimeSpent</b>, <b>partialSectionTimeSpent</b>, <b>recordedTimeSpent</b>, 
+	 * and <b>stoppingPoint</b> measure in second <b><ins><i>NOT</i></ins></b> millisecond
 	 */
-	long accumulatedTimeSpent, partialSectionTimeSpent, recordedTimeSpent, stoppingPoint;
+	long accumulatedTimeSpent, recordedTimeSpent, stoppingPoint;
 
 	//Declare a variable to hold count down timer's paused status
     private boolean isPaused, isCanceled;
@@ -60,15 +62,25 @@ public class TimerActivity extends Activity
 		
 		Intent fromSelectTaskIntent = getIntent();
 		selectedProject = fromSelectTaskIntent.getStringExtra(SelectTaskActivity.EXTRA_SELECTED_TASK);
-		currentProjectTitle = selectedProject.split(" ")[1];
+		curProjTitle = selectedProject.split("\\|")[1];
+		curProjLanguage = selectedProject.split("\\|")[2];
+		curProjDescription = selectedProject.split("\\|")[3];
+		curProjStartDate = selectedProject.split("\\|")[4];
+		curProjTimeSpent = selectedProject.split("\\|")[5];
+		curProjGrade = selectedProject.split("\\|")[6];
+		curProjDistraction = selectedProject.split("\\|")[7];
+		curProjProgress = selectedProject.split("\\|")[8];
 		
 		tvSelectedProject = (TextView) findViewById(R.id.tvSelectedProject);
-		tvSelectedProject.setText(selectedProject);
+		tvSelectedProject.setText("Title: " + curProjTitle + 
+				"\nProgress: " + curProjProgress + 
+				"\nGrade: " + curProjGrade + 
+				"\nDistraction: " + curProjDistraction);
+		
 		tvWorkOrBreakTime = (TextView) findViewById(R.id.tvWorkOrBreakTime);
 		tvWorkOrBreakTime.setText("Not start work yet");
 		tvTimer = (TextView) findViewById(R.id.tvTimer);
 		tvAccumulatedTimeSpent = (TextView) findViewById(R.id.tvAccumulatedTimeSpent);
-		tvAccumulatedTimeSpent.setText("Calculate after each work section.");
 		
 		drawableStart = getResources().getDrawable(R.drawable.ic_start);
 		drawableStartSubdued = getResources().getDrawable(R.drawable.ic_start_subdued);
@@ -97,13 +109,32 @@ public class TimerActivity extends Activity
         countDownInterval = 1000;
         workTimeRemain = 0;
         accumulatedTimeSpent = 0;		//!!! this is measure in second not millisecond
-        partialSectionTimeSpent = 0;	//!!! this is measure in second not millisecond
         recordedTimeSpent = 0;			//!!! this is measure in second not millisecond
         // may be useful for set max work load, for example no more than 16 hours a day.
         stoppingPoint = 120;			//!!! this is measure in second not millisecond
         
         //Init: not pause, not cancel flags, enable start, disabled pause, resume, and cancel buttons
-        setButtonAndFlagState(false, false, true, false, false, false);
+        if(isCompleteOrAbandon())
+        {
+        	setButtonAndFlagState(false, false, false, false, false, false);
+        	btnMarkProjectComplete.setEnabled(false);
+        	btnMarkProjectAbandon.setEnabled(false);
+        	if(isAssessed())
+        	{
+        		btnTimerToAssess.setEnabled(false);
+        	}
+        	else
+        	{
+        		btnTimerToAssess.setEnabled(true);
+        	}
+        }
+        else
+        {
+        	setButtonAndFlagState(false, false, true, false, false, false);
+        	btnMarkProjectComplete.setEnabled(true);
+        	btnMarkProjectAbandon.setEnabled(true);
+        	btnTimerToAssess.setEnabled(false);
+        }
         
         btnStartTimer.setOnClickListener(new OnClickListener()
 		{
@@ -111,14 +142,14 @@ public class TimerActivity extends Activity
 			public void onClick(View v)
 			{
 				//
-				if(dBHelperAdapter.getProjectProgress(currentProjectTitle).equalsIgnoreCase("not start"))
+				if(dBHelperAdapter.getProjectProgress(curProjTitle).equalsIgnoreCase("not start"))
 				{
 					String timeStamp = new SimpleDateFormat(
 							"MM/dd/yyyy", Locale.US).format(Calendar.getInstance().getTime());
-					dBHelperAdapter.updateStartTime(currentProjectTitle, timeStamp);
+					dBHelperAdapter.updateStartTime(curProjTitle, timeStamp);
 				}
 				
-				dBHelperAdapter.updateProjectProgress(currentProjectTitle, "working on");
+				dBHelperAdapter.updateProjectProgress(curProjTitle, "working on");
 				
 				btnStartTimer.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableStartSubdued, null);
 
@@ -159,7 +190,7 @@ public class TimerActivity extends Activity
 				setButtonAndFlagState(false, true, true, false, false, false);
 
                 //Notify the user that CountDownTimer is canceled/stopped
-				tvTimer.setText("CountDownTimer Canceled/stopped.");
+				tvTimer.setText("CountDownTimer stopped.");
 				
 				insertTimeSpentToDB();
 			}
@@ -171,7 +202,10 @@ public class TimerActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				dBHelperAdapter.updateProjectProgress(currentProjectTitle, "completed");
+				dBHelperAdapter.updateProjectProgress(curProjTitle, "completed");
+				btnMarkProjectComplete.setEnabled(false);
+	        	btnMarkProjectAbandon.setEnabled(false);
+	        	btnTimerToAssess.setEnabled(true);
 			}
 		});
         
@@ -181,7 +215,10 @@ public class TimerActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				dBHelperAdapter.updateProjectProgress(currentProjectTitle, "abandoned");
+				dBHelperAdapter.updateProjectProgress(curProjTitle, "abandoned");
+				btnMarkProjectComplete.setEnabled(false);
+	        	btnMarkProjectAbandon.setEnabled(false);
+	        	btnTimerToAssess.setEnabled(true);
 			}
 		});
         
@@ -227,7 +264,6 @@ public class TimerActivity extends Activity
 	public void setWorkTimer(long mWorkTime, long mCountDownInterval)
 	{
 		isWorking = true;
-		partialSectionTimeSpent = 0;
 		//Initialize a new CountDownTimer instance, ex for 30 seconds 1 second per tick
         new CountDownTimer(mWorkTime,mCountDownInterval)
         {
@@ -240,6 +276,7 @@ public class TimerActivity extends Activity
                 	if(accumulatedTimeSpent >= stoppingPoint)
                     {
                     	insertTimeSpentToDB();
+                    	setButtonAndFlagState(false, true, false, false, false, false);
                     }
                     //If the user request to cancel or paused the
                     //CountDownTimer we will cancel the current instance
@@ -248,8 +285,6 @@ public class TimerActivity extends Activity
                 else 
                 {
                     //Display the remaining seconds to app interface
-                    //1 second = 1000 milliseconds
-//                	tvTimer.setText("" + millisUntilFinished / 1000);
                 	
                 	long cdInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
                 	long cdInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
@@ -260,40 +295,14 @@ public class TimerActivity extends Activity
                 	
                     //Put count down timer remaining time in a variable
                 	workTimeRemain = millisUntilFinished;
-//                	accumulatedTimeSpent++;
-////                	tvWorkOrBreakTime.setText("You are working ... this section worked: " + accumulatedTimeSpent);
-//                	
-//                	long atsInHours = TimeUnit.SECONDS.toHours(accumulatedTimeSpent);
-//                	long atsInMinutes = TimeUnit.SECONDS.toMinutes(accumulatedTimeSpent);
-//                	long atsInSeconds = TimeUnit.SECONDS.toSeconds(accumulatedTimeSpent);
-//                	long atsRemainMinute = atsInMinutes - TimeUnit.HOURS.toMinutes(atsInHours);
-//                	long atsRemainSecond = atsInSeconds - TimeUnit.HOURS.toSeconds(atsInHours) - 
-//                			TimeUnit.MINUTES.toSeconds(atsRemainMinute);
-//                	tvWorkOrBreakTime.setText("You are working ... this section worked: " + 
-//                			String.format(Locale.US, 
-//                        			"%d hr : %d min : %d sec", 
-//                        			atsInHours, atsRemainMinute, atsRemainSecond));
-//                	long atsInMinutes = TimeUnit.SECONDS.toMinutes(accumulatedTimeSpent);
-//                	tvWorkOrBreakTime.setText("You are working ... this section worked: " + 
-//                			String.format(Locale.US, "%d min", atsInMinutes));
-                	partialSectionTimeSpent++;
-                	tvWorkOrBreakTime.setText("You are working ... " + partialSectionTimeSpent);
+                	tvWorkOrBreakTime.setText("You are working");
+                	accumulatedTimeSpent++;
                 }
             }
             public void onFinish()
             {
-            	partialSectionTimeSpent = 0;
-            	accumulatedTimeSpent+=30;
-            	long atsInHours = TimeUnit.SECONDS.toHours(accumulatedTimeSpent);
-            	long atsInMinutes = TimeUnit.SECONDS.toMinutes(accumulatedTimeSpent);
-            	long atsInSeconds = TimeUnit.SECONDS.toSeconds(accumulatedTimeSpent);
-            	long atsRemainMinute = atsInMinutes - TimeUnit.HOURS.toMinutes(atsInHours);
-            	long atsRemainSecond = atsInSeconds - TimeUnit.HOURS.toSeconds(atsInHours) - 
-            			TimeUnit.MINUTES.toSeconds(atsRemainMinute);
-            	tvAccumulatedTimeSpent.setText("Total worked: " + 
-            			String.format(Locale.US, 
-                    			"%d hr : %d min : %d sec", 
-                    			atsInHours, atsRemainMinute, atsRemainSecond));
+            	// here increase by 1 is because onFinish do count one last tick (second)
+            	accumulatedTimeSpent++;
             	
             	// this makes infinite CountDownTimer until user pause or cancel/stop
             	// WARNING: will this cause resource drink or memory leak,
@@ -301,10 +310,11 @@ public class TimerActivity extends Activity
             	// EX:
             	// a pomodoro section total 4 hours, 4 cycle each 1 hour; then there are only 4 call.
             	// also CountDownTimer is not a service will close if activity go to background.
-            	btnStartTimer.setEnabled(false);
-            	btnPauseTimer.setEnabled(false);
-            	btnResumeTimer.setEnabled(false);
-            	btnStopTimer.setEnabled(true);
+//            	btnStartTimer.setEnabled(false);
+//            	btnPauseTimer.setEnabled(false);
+//            	btnResumeTimer.setEnabled(false);
+//            	btnStopTimer.setEnabled(true);
+            	setButtonAndFlagState(false, false, false, false, false, true);
                 setBreakTimer(breakTime1, countDownInterval);
             }
         }.start();
@@ -325,26 +335,28 @@ public class TimerActivity extends Activity
                 if(isCanceled || accumulatedTimeSpent >= stoppingPoint || isWorking)
                 {
                 	insertTimeSpentToDB();
+                	setButtonAndFlagState(false, true, false, false, false, false);
                     cancel();
                 }
                 else 
                 {
-//                	tvTimer.setText("" + millisUntilFinished / 1000);
+                	tvTimer.setText("" + millisUntilFinished / 1000);
                 	long cdInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
                 	long cdInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
                 	long cdRemainSecond = cdInSeconds - TimeUnit.MINUTES.toSeconds(cdInMinutes);
                 	tvTimer.setText("" + String.format(Locale.US, 
                 			"%d min : %d sec", 
                 			cdInMinutes, cdRemainSecond));
-                	tvWorkOrBreakTime.setText("You are taking a break ...");
+                	tvWorkOrBreakTime.setText("You are taking a break");
                 }
             }
             public void onFinish()
             {
-            	btnStartTimer.setEnabled(false);
-            	btnPauseTimer.setEnabled(true);
-            	btnResumeTimer.setEnabled(false);
-            	btnStopTimer.setEnabled(true);
+//            	btnStartTimer.setEnabled(false);
+//            	btnPauseTimer.setEnabled(true);
+//            	btnResumeTimer.setEnabled(false);
+//            	btnStopTimer.setEnabled(true);
+            	setButtonAndFlagState(false, false, false, true, false, true);
                 setWorkTimer(workTime1, countDownInterval);
             }
         }.start();
@@ -411,9 +423,7 @@ public class TimerActivity extends Activity
 	//update db project time spent, unit of measurement is second
 	public void insertTimeSpentToDB()
 	{
-//		String currentProjectTitle = selectedProject.split(" ")[1];
-		
-		String timeSpentFromDB = dBHelperAdapter.get_TimeSpent(currentProjectTitle);
+		String timeSpentFromDB = dBHelperAdapter.get_TimeSpent(curProjTitle);
 		// check for first insert of add to record
 		if(!timeSpentFromDB.equalsIgnoreCase("null"))
 		{
@@ -421,18 +431,31 @@ public class TimerActivity extends Activity
 			recordedTimeSpent = timeToSecond(timeSpentFromDB);
 		}
 		// long sec  to  String hr:min:sec
-		long sttsInHours = TimeUnit.SECONDS.toHours(accumulatedTimeSpent + partialSectionTimeSpent + recordedTimeSpent);
-    	long sttsInMinutes = TimeUnit.SECONDS.toMinutes(accumulatedTimeSpent + partialSectionTimeSpent + recordedTimeSpent);
-    	long sttsInSeconds = TimeUnit.SECONDS.toSeconds(accumulatedTimeSpent + partialSectionTimeSpent + recordedTimeSpent);
+		long sttsInHours = TimeUnit.SECONDS.toHours(accumulatedTimeSpent + recordedTimeSpent);
+    	long sttsInMinutes = TimeUnit.SECONDS.toMinutes(accumulatedTimeSpent + recordedTimeSpent);
+    	long sttsInSeconds = TimeUnit.SECONDS.toSeconds(accumulatedTimeSpent + recordedTimeSpent);
     	long sttsRemainMinute = sttsInMinutes - TimeUnit.HOURS.toMinutes(sttsInHours);
     	long sttsRemainSecond = sttsInSeconds - TimeUnit.HOURS.toSeconds(sttsInHours) - 
     			TimeUnit.MINUTES.toSeconds(sttsRemainMinute);
     	String subTotleTimeSpent = String.format(Locale.US, 
             			"%d:%d:%d", 
             			sttsInHours, sttsRemainMinute, sttsRemainSecond);
-    	
+    	// TODO: move this to top
+    	tvAccumulatedTimeSpent.setText("project accumulatedTimeSpent: " + subTotleTimeSpent);
     	// do actual update to db
-    	dBHelperAdapter.insert_TimeSpent(currentProjectTitle, subTotleTimeSpent);
+    	dBHelperAdapter.insert_TimeSpent(curProjTitle, subTotleTimeSpent);
+    	
+    	long msttsInHours = TimeUnit.SECONDS.toHours(accumulatedTimeSpent);
+    	long msttsInMinutes = TimeUnit.SECONDS.toMinutes(accumulatedTimeSpent);
+    	long msttsInSeconds = TimeUnit.SECONDS.toSeconds(accumulatedTimeSpent);
+    	long msttsRemainMinute = msttsInMinutes - TimeUnit.HOURS.toMinutes(msttsInHours);
+    	long msttsRemainSecond = msttsInSeconds - TimeUnit.HOURS.toSeconds(msttsInHours) - 
+    			TimeUnit.MINUTES.toSeconds(msttsRemainMinute);
+    	String msubTotleTimeSpent = String.format(Locale.US, 
+            			"%d:%d:%d", 
+            			msttsInHours, msttsRemainMinute, msttsRemainSecond);
+    	tvWorkOrBreakTime.setText("section time spent: " + msubTotleTimeSpent);
+    	accumulatedTimeSpent = 0;
 	}
 	
 	public long timeToSecond(String strTime)
@@ -446,5 +469,26 @@ public class TimerActivity extends Activity
 		long second = Long.parseLong(tempSeconds);
 		long subtotalSeconds = secondInHour + secondInMinute + second;
 		return subtotalSeconds;
+	}
+	
+	public boolean isCompleteOrAbandon()
+	{
+		String projectProgress = dBHelperAdapter.getProjectProgress(curProjTitle);
+		return (projectProgress.equalsIgnoreCase("completed") || projectProgress.equalsIgnoreCase("abandoned"));
+	}
+	
+	public boolean isAssessed()
+	{
+		String nGrade = dBHelperAdapter.get_ProductivityLevel(curProjTitle);
+		String nDistraction = dBHelperAdapter.get_DistractionLevel(curProjTitle);
+		// they start with 0 not null
+		if(nGrade.equalsIgnoreCase("0") && nDistraction.equalsIgnoreCase("0"))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }

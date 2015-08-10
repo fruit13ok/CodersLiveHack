@@ -18,7 +18,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".CodersLiveHackActivity"
-            android:label="@string/title_activity_coders_live_hack" >
+            android:label="@string/title_activity_coders_live_hack"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,19 +29,27 @@
         </activity>
         <activity
             android:name=".CreateTaskActivity"
-            android:label="@string/title_activity_create_task" >
+            android:label="@string/title_activity_create_task"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SelectTaskActivity"
-            android:label="@string/title_activity_select_task" >
+            android:label="@string/title_activity_select_task"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".TimerActivity"
-            android:label="@string/title_activity_timer" >
+            android:label="@string/title_activity_timer"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".AssessActivity"
-            android:label="@string/title_activity_assess" >
+            android:label="@string/title_activity_assess"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".GraphActivity"
@@ -49,7 +59,9 @@
         </activity>
         <activity
             android:name=".GetGitCommitActivity"
-            android:label="@string/title_activity_get_git_commit" >
+            android:label="@string/title_activity_get_git_commit"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".DummyUpdateActivity"
