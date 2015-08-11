@@ -63,22 +63,27 @@
         android:text="0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <Button
-        android:id="@+id/btnGetNumOfCommit"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Get number of commit" />
+        android:layout_centerHorizontal="true" >
 
-    <Button
-        android:id="@+id/btnNumGitCommitToHome"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Home" />
+        <Button
+            android:id="@+id/btnGetNumOfCommit"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Number of commit" />
+
+        <Button
+            android:id="@+id/btnNumGitCommitToHome"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Home" />
+    </LinearLayout>
 
 </RelativeLayout>

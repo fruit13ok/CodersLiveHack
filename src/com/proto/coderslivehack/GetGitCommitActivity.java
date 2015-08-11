@@ -13,7 +13,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,6 +25,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GetGitCommitActivity extends Activity
 {
@@ -32,11 +36,19 @@ public class GetGitCommitActivity extends Activity
 //	private static String URL = "https://api.github.com/repos/fruit13ok/CodersLiveHack/commits";
 	private static String URL = "";
 	
+	ConnectivityManager cm;
+	NetworkInfo activeNetwork;
+	boolean isConnected;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get_git_commit);
+		
+//		cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//		activeNetwork = cm.getActiveNetworkInfo();
+//		isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 		
 		etGithubAccount = (EditText) findViewById(R.id.etGithubAccount);
 		etGithubRepository = (EditText) findViewById(R.id.etGithubRepository);
@@ -49,13 +61,29 @@ public class GetGitCommitActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				// this URL return a JSONArray, so use JSONArray to store it
-				// !!! CAREFUL !!! if remove the last part /commits, it will return JSONObject
-				URL = "https://api.github.com/repos/" + 
-						etGithubAccount.getText().toString() + "/" + 
-						etGithubRepository.getText().toString() + "/commits";
-//				new HttpGetTask().execute();
-				new HttpGetTask().execute(URL);
+				// these 3 lines plus this 1 line in manifest file to check connectivity.
+				// <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+				// only try connect to github if have connection.
+				cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+				activeNetwork = cm.getActiveNetworkInfo();
+				isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+				
+				if(isConnected)
+				{
+					// this URL return a JSONArray, so use JSONArray to store it
+					// !!! CAREFUL !!! if remove the last part /commits, it will return JSONObject
+					URL = "https://api.github.com/repos/" + 
+							etGithubAccount.getText().toString() + "/" + 
+							etGithubRepository.getText().toString() + "/commits";
+//					new HttpGetTask().execute();
+					new HttpGetTask().execute(URL);
+				}
+				else
+				{
+					Toast.makeText(getApplicationContext(), 
+							"Need internet connection, please turn on data or wifi", 
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
 		btnNumGitCommitToHome = (Button) findViewById(R.id.btnNumGitCommitToHome);

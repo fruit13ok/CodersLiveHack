@@ -63,48 +63,67 @@ public class DBHelperAdapter
 	///////////////////////////////////// insert content //////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////////////////////
 	
-	// TODO: delete startDate and grade later,
+	// TODO:
+	// try to make title to be unique
+	// 
+	// SQLITE way looks problematic, I am not going to use:
+	// CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + " (" + 
+	// ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " + 
+	// PROJECT_TITLE + " VARCHAR(255) UNIQUE, " + ...
+	// and
+	// sQLiteDatabase.insertWithOnConflict()
+	//
+	// I will try to use java, just query all unique title, compare to current input title
+	
 	// when work on timer and assessment make update for startDate and grade later
 	// now only use by CreateTaskActivity
 	// use to insert data to database, return inserted row id or -1 for fail to insert
 	public long insertData(String projectTitle, String programmingLanguages, String projectDescription)
-//			 String startDate, String grade, String distraction)
 	{
-		// need SQLiteDatabase object to point to your database before you can do anything
-		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
+		if(!projectTitle.trim().isEmpty() && !programmingLanguages.trim().isEmpty() && 
+				!projectDescription.trim().isEmpty())
+		{
+			// need SQLiteDatabase object to point to your database before you can do anything
+			SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
+			
+			// ContentValues key value pair use to referring database columns
+			ContentValues contentValues = new ContentValues();
+			// TODO: later make sure projectTitle, programmingLanguages, and projectDescription not empty
+			if(!projectTitle.isEmpty())
+				contentValues.put(DBHelper.PROJECT_TITLE, projectTitle);
+			if(!programmingLanguages.isEmpty())
+				contentValues.put(DBHelper.PROGRAMMING_LANGUAGES, programmingLanguages);
+			if(!projectDescription.isEmpty())
+				contentValues.put(DBHelper.PROJECT_DESCRIPTION, projectDescription);
+//			if(!startDate.isEmpty())
+//				contentValues.put(DBHelper.START_TIME, startDate);
+//			if(!grade.isEmpty())
+//				contentValues.put(DBHelper.PRODUCTIVE_LEVEL, grade);
+//			if(!distraction.isEmpty())
+//				contentValues.put(DBHelper.DISTRACTION_LEVEL, distraction);
+			
+			contentValues.put(DBHelper.PROJECT_PROGRESS, "not start");
+			
+			// TODO: live it here I might not want to use default null value 
+//			contentValues.put(DBHelper.START_TIME, "null");
+//			contentValues.put(DBHelper.TIME_SPENT, "null");
+//			contentValues.put(DBHelper.PRODUCTIVE_LEVEL, "null");
+//			contentValues.put(DBHelper.PROJECT_PROGRESS, "null");
+//			contentValues.put(DBHelper.DISTRACTION_LEVEL, "null");
+			
+			// TODO: might need to allow null value for database
+			// 2nd arg nullColumnHack is to allow to insert null as database value by specify any column name,
+			// null means not allow null value
+			// id can use to check for insert error if return -1
+			long id = sQLiteDatabase.insert(DBHelper.TABLE_NAME, null, contentValues);
+			sQLiteDatabase.close();
+			return id;
+		}
+		else
+		{
+			return -1;
+		}
 		
-		// ContentValues key value pair use to referring database columns
-		ContentValues contentValues = new ContentValues();
-		// TODO: later make sure projectTitle, programmingLanguages, and projectDescription not empty
-		if(!projectTitle.isEmpty())
-			contentValues.put(DBHelper.PROJECT_TITLE, projectTitle);
-		if(!programmingLanguages.isEmpty())
-			contentValues.put(DBHelper.PROGRAMMING_LANGUAGES, programmingLanguages);
-		if(!projectDescription.isEmpty())
-			contentValues.put(DBHelper.PROJECT_DESCRIPTION, projectDescription);
-//		if(!startDate.isEmpty())
-//			contentValues.put(DBHelper.START_TIME, startDate);
-//		if(!grade.isEmpty())
-//			contentValues.put(DBHelper.PRODUCTIVE_LEVEL, grade);
-//		if(!distraction.isEmpty())
-//			contentValues.put(DBHelper.DISTRACTION_LEVEL, distraction);
-		
-		contentValues.put(DBHelper.PROJECT_PROGRESS, "not start");
-		
-		// TODO: live it here I might not want to use default null value 
-//		contentValues.put(DBHelper.START_TIME, "null");
-//		contentValues.put(DBHelper.TIME_SPENT, "null");
-//		contentValues.put(DBHelper.PRODUCTIVE_LEVEL, "null");
-//		contentValues.put(DBHelper.PROJECT_PROGRESS, "null");
-//		contentValues.put(DBHelper.DISTRACTION_LEVEL, "null");
-		
-		// TODO: might need to allow null value for database
-		// 2nd arg nullColumnHack is to allow to insert null as database value by specify any column name,
-		// null means not allow null value
-		// id can use to check for insert error if return -1
-		long id = sQLiteDatabase.insert(DBHelper.TABLE_NAME, null, contentValues);
-		sQLiteDatabase.close();
-		return id;
 	}
 	
 	///////////////////////////////////////////////////////////////////////////////////////////
@@ -305,6 +324,28 @@ public class DBHelperAdapter
 			buffer.append(projectProgress);
 		}
 		return buffer.toString();
+	}
+	
+	/**
+	 * I use distinct = true to get unique language name, and use orderby to ascending. 
+	 * @return
+	 */
+	public String getAllLanguages()
+	{
+		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
+		String[] columns = {DBHelper.PROGRAMMING_LANGUAGES};
+		Cursor cursor = sQLiteDatabase.query(true, DBHelper.TABLE_NAME, columns, null, null, null, null, 
+				DBHelper.PROGRAMMING_LANGUAGES + " ASC", null);
+		StringBuffer stringBuffer = new StringBuffer();
+		
+		while(cursor.moveToNext())
+		{
+			int programmingLanguagesColIndex = cursor.getColumnIndex(DBHelper.PROGRAMMING_LANGUAGES);
+			String programmingLanguages = cursor.getString(programmingLanguagesColIndex);
+
+			stringBuffer.append(programmingLanguages + " ");
+		}
+		return stringBuffer.toString();
 	}
 	
 //	public String getAllDataByDateAndGrade(String mDate, String mGrade)

@@ -144,8 +144,11 @@ public class TimerActivity extends Activity
 				//
 				if(dBHelperAdapter.getProjectProgress(curProjTitle).equalsIgnoreCase("not start"))
 				{
+//					String timeStamp = new SimpleDateFormat(
+//							"MM/dd/yyyy", Locale.US).format(Calendar.getInstance().getTime());
 					String timeStamp = new SimpleDateFormat(
-							"MM/dd/yyyy", Locale.US).format(Calendar.getInstance().getTime());
+							"MM/dd/yyyy", getResources().getConfiguration().locale).
+							format(Calendar.getInstance().getTime());
 					dBHelperAdapter.updateStartTime(curProjTitle, timeStamp);
 				}
 				

@@ -23,7 +23,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <LinearLayout
-        android:id="@+id/linearLayout2"
+        android:id="@+id/llSelectAndGitButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -60,11 +60,11 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/llCreateAndGraphButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/linearLayout2" >
+        android:layout_below="@+id/llSelectAndGitButtons" >
 
         <Button
             android:id="@+id/btnMarkProjectComplete"
@@ -82,24 +82,6 @@
             android:layout_weight="0.25"
             android:text="Abandon" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/btnTimerToHome"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Home" />
-
-    <Button
-        android:id="@+id/btnTimerToAssess"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Assess" />
 
     <TextView
         android:id="@+id/tvSelectedProjectLabel"
@@ -134,5 +116,28 @@
         android:layout_above="@+id/tvAccumulatedTimeSpent"
         android:layout_centerHorizontal="true"
         android:hint="Working or Breaking" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" >
+
+        <Button
+            android:id="@+id/btnTimerToHome"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Home" />
+
+        <Button
+            android:id="@+id/btnTimerToAssess"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Assess" />
+    </LinearLayout>
 
 </RelativeLayout>

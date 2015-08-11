@@ -30,41 +30,52 @@
         android:layout_centerVertical="true"
         android:text="Blah Blah Blah ..." />
 
-    <Button
-        android:id="@+id/btnHomeToNumGitCommit"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llSelectAndGitButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Github Commit Amount" />
+        android:layout_centerHorizontal="true" >
 
-    <Button
-        android:id="@+id/btnHomeToGraph"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/btnHomeToNumGitCommit"
-        android:layout_alignParentRight="true"
-        android:text="Graphical data" />
+        <Button
+            android:id="@+id/btnHomeToSelectTask"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Select Task" />
 
-    <Button
-        android:id="@+id/btnHomeToSelectTask"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Select Task" />
+        <Button
+            android:id="@+id/btnHomeToNumGitCommit"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Github Commit Data" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btnHomeToCreateTask"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llCreateAndGraphButtons"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnHomeToGraph"
-        android:layout_alignBottom="@+id/btnHomeToGraph"
-        android:layout_alignParentLeft="true"
-        android:text="Create Task" />
+        android:layout_above="@+id/llSelectAndGitButtons"
+        android:layout_centerHorizontal="true" >
+
+        <Button
+            android:id="@+id/btnHomeToCreateTask"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Create Task" />
+
+        <Button
+            android:id="@+id/btnHomeToGraph"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Graphical data" />
+    </LinearLayout>
 
 </RelativeLayout>

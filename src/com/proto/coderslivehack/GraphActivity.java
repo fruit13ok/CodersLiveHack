@@ -55,13 +55,17 @@ import android.widget.AdapterView.OnItemSelectedListener;
 public class GraphActivity extends Activity
 {
 	// these 2 use to format date
-	String datePattern = "MM/dd/yyyy";
-	SimpleDateFormat sdf = new SimpleDateFormat(datePattern, Locale.US);
+	String datePattern;
+	Locale currentLocale;
+//	SimpleDateFormat sdf = new SimpleDateFormat(datePattern, Locale.US);
+	SimpleDateFormat sdf;
 	
 	// spinner is not make to use for executing code, should add a button later to execute the selected spinner
 	Spinner spFilterProgrammingLanguage;
 	ArrayList<String> alFilterProgrammingLanguage;
 	ArrayAdapter<String> aaFilterProgrammingLanguage;
+	String allLanguageFromDB;
+	String[] arAllLanguageFromDB;
 	Button btnFilter;
 	
 	// use to navigate 
@@ -100,6 +104,10 @@ public class GraphActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		
+		datePattern = "MM/dd/yyyy";
+		currentLocale = getResources().getConfiguration().locale;
+		sdf = new SimpleDateFormat(datePattern, currentLocale);
+		
 		tvXaxisLabel = (TextView) findViewById(R.id.tvXaxisLabel);
 		tvSelectedProjectInfo = (TextView) findViewById(R.id.tvSelectedProjectInfo);
 		tvSelectedProjectInfo.setMovementMethod(new ScrollingMovementMethod());
@@ -135,14 +143,26 @@ public class GraphActivity extends Activity
 		// initialize graph
 		initGraph(arrDateGradeDataPoints, arrDateDistractionDataPoints);
 		
+		allLanguageFromDB = "";
+		allLanguageFromDB = dBHelperAdapter.getAllLanguages();
+		arAllLanguageFromDB = allLanguageFromDB.split(" ");
+		
 		// TODO:
-		// add other languages to spinner
+		// when have time make grade and distraction always come in pair, may be in createtaskactivity,
+		// Dynamically add languages from db to spinner,
+		// only add language that at least 1 project totally done.
 		spFilterProgrammingLanguage = (Spinner) findViewById(R.id.spFilterProgrammingLanguage);
 		alFilterProgrammingLanguage = new ArrayList<String>();
 		alFilterProgrammingLanguage.add("No selection");
 		alFilterProgrammingLanguage.add("All");
-		alFilterProgrammingLanguage.add("Java");
-		alFilterProgrammingLanguage.add("HTML");
+		for(String aLanguage : arAllLanguageFromDB)
+		{
+			if(!dBHelperAdapter.getDateGradeByLanguage(aLanguage).isEmpty() && 
+					!dBHelperAdapter.getDateDistractionByLanguage(aLanguage).isEmpty())
+			{
+				alFilterProgrammingLanguage.add(aLanguage);
+			}
+		}
 		
 		aaFilterProgrammingLanguage = new ArrayAdapter<String>(
 				this, android.R.layout.simple_spinner_item, alFilterProgrammingLanguage);
@@ -402,14 +422,12 @@ public class GraphActivity extends Activity
                 // To get date from double type to a Date type
                 long l = (long) (dataPoint.getX());
                 Date d = new Date(l);
-                String s = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(d);
+                String s = new SimpleDateFormat(datePattern, currentLocale).format(d);
                 Toast.makeText(getApplicationContext(),
                         "date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
 
                 dataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, "" + (int) dataPoint.getY(),"|");
-                System.out.println("mytab: test1 " + dataWholeRow);
                 String[] allData = dataWholeRow.split("\\|");
-                System.out.println("mytab: test2 "+allData.length);
                 String projectTitle = allData[1];
                 String projectLanguage = allData[2];
                 String description = allData[3];
@@ -528,7 +546,7 @@ public class GraphActivity extends Activity
 	{
 		long nl = (long) (alDateGradeDataPoints.get(0).getX());
     	Date nd = new Date(nl);
-    	String ns = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(nd);
+    	String ns = new SimpleDateFormat(datePattern, currentLocale).format(nd);
     	Calendar ncal = Calendar.getInstance();
 		try {
 			ncal.setTime(sdf.parse(ns));

@@ -47,23 +47,33 @@ public class CreateTaskActivity extends Activity
 				programmingLanguages = etSetProjectPLanguages.getText().toString();
 				projectDescription = etSetProjectDescription.getText().toString();
 				
-				long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, 
-						projectDescription);
-
-				if(id < 0)
+				// to prevent insert empty project to db
+				if(projectTitle.trim().isEmpty() || programmingLanguages.trim().isEmpty() || 
+						projectDescription.trim().isEmpty())
 				{
-					Toast.makeText(getApplicationContext(), "unsuccessful", Toast.LENGTH_LONG).show();
+					System.out.println("Please fill in all 3 fields, projectTitle.");
 				}
 				else
 				{
-					Toast.makeText(getApplicationContext(), "successful inserted a project", 
-							Toast.LENGTH_LONG).show();
+					long id = dBHelperAdapter.insertData(projectTitle, programmingLanguages, 
+							projectDescription);
+
+					// if db row id return -1, it mean insert fail
+					if(id < 0)
+					{
+						Toast.makeText(getApplicationContext(), "unsuccessful", Toast.LENGTH_LONG).show();
+					}
+					else
+					{
+						Toast.makeText(getApplicationContext(), "successful inserted a project", 
+								Toast.LENGTH_LONG).show();
+					}
+					
+					// TODO:
+					// for testing display data inside database, remove it later
+					String allData = dBHelperAdapter.getAllData();
+					Toast.makeText(getApplicationContext(), allData, Toast.LENGTH_LONG).show();
 				}
-				
-				// TODO:
-				// for testing display data inside database, remove it later
-				String allData = dBHelperAdapter.getAllData();
-				Toast.makeText(getApplicationContext(), allData, Toast.LENGTH_LONG).show();
 			}
 		});
 		btnCreateTaskToHome = (Button) findViewById(R.id.btnCreateTaskToHome);
