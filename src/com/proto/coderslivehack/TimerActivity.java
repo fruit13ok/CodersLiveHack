@@ -54,6 +54,9 @@ public class TimerActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Timer");
+		getActionBar().setIcon(R.drawable.ic_action_timer);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timer);
 		

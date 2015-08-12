@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">CodersLiveHack</string>
-    <string name="title_activity_coders_live_hack">CodersLiveHackActivity</string>
+    <string name="title_activity_coders_live_hack">Coders Live Hack</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_create_task">CreateTaskActivity</string>
     <string name="title_activity_select_task">SelectTaskActivity</string>

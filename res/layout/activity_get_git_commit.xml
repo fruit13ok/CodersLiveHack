@@ -5,20 +5,10 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
-        android:id="@+id/tvNumOfGithobCommitLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Number of Github Commits"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
         android:id="@+id/tvGithubAccountLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvNumOfGithobCommitLabel"
         android:layout_marginTop="20dp"
         android:text="Enter Github account name:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -30,7 +20,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvGithubAccountLabel"
         android:ems="10"
-        android:text="fruit13ok" >
+        android:text="fruit13ok"
+        android:imeOptions="actionNext"
+        android:inputType="text" >
 
         <requestFocus />
     </EditText>
@@ -52,7 +44,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/tvGithubRepositoryLabel"
         android:ems="10"
-        android:text="CodersLiveHack" />
+        android:text="CodersLiveHack"
+        android:imeOptions="actionDone"
+        android:inputType="text" />
 
     <TextView
         android:id="@+id/tvNumOfGithobCommit"

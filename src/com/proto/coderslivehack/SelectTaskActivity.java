@@ -37,6 +37,9 @@ public class SelectTaskActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Your Projects");
+		getActionBar().setIcon(R.drawable.ic_action_task);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_task);
 		

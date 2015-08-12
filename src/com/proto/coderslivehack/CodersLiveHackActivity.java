@@ -14,6 +14,9 @@ public class CodersLiveHackActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Coders Live Hack");
+		getActionBar().setIcon(R.drawable.ic_action_home);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_coders_live_hack);
 		

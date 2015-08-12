@@ -10,42 +10,6 @@
         - Can copy and paste two widgets no other changes were
           made to activity_create_task.xml
    -->
-   
-    <TextView
-        android:id="@+id/tvCreateNewTaskLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Create New Task"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <Button
-        android:id="@+id/btnAddProjectToDB"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:text="Add" />
-
-    <Button
-        android:id="@+id/btnCreateTaskToSelectTask"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Select Task" />
-
-    <Button
-        android:id="@+id/btnCreateTaskToHome"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:text="Home" />
 
     <EditText
         android:id="@+id/etSetProjectPLanguages"
@@ -54,7 +18,9 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etSetProjectTitle"
         android:ems="10"
-        android:hint="Programming languages this project use (separate by comma)." />
+        android:hint="Programming languages this project use (separate by comma)."
+        android:imeOptions="actionNext"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/etSetProjectDescription"
@@ -63,15 +29,53 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etSetProjectPLanguages"
         android:ems="10"
-        android:hint="Short project description." />
+        android:hint="Short project description."
+        android:imeOptions="actionDone"
+        android:inputType="text" />
 
     <EditText
         android:id="@+id/etSetProjectTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvCreateNewTaskLabel"
         android:ems="10"
-        android:hint="New project title." />
+        android:hint="New project title."
+        android:imeOptions="actionNext"
+        android:inputType="text" >
+        <requestFocus />
+    </EditText>
+
+    <LinearLayout
+        android:id="@+id/llAddHomeSelectButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:weightSum="3" >
+
+        <Button
+            android:id="@+id/btnAddProjectToDB"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Add"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnCreateTaskToHome"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Home"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnCreateTaskToSelectTask"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Select Task"
+            android:layout_weight="1" />
+    </LinearLayout>
 
 </RelativeLayout>

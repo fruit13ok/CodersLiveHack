@@ -1,5 +1,7 @@
 package com.proto.coderslivehack;
 
+import java.util.Arrays;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,9 +25,15 @@ public class CreateTaskActivity extends Activity
 	
 	String projectTitle, programmingLanguages, projectDescription;
 	
+	String allProjectTitleFromDB;
+	String[] arAllProjectTitleFromDB;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Create New Task");
+		getActionBar().setIcon(R.drawable.ic_action_create_list);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_task);
 		
@@ -43,15 +51,25 @@ public class CreateTaskActivity extends Activity
 			{
 				// TODO:
 				// add to database stuffs
-				projectTitle = etSetProjectTitle.getText().toString();
-				programmingLanguages = etSetProjectPLanguages.getText().toString();
-				projectDescription = etSetProjectDescription.getText().toString();
+				projectTitle = etSetProjectTitle.getText().toString().trim();
+				programmingLanguages = etSetProjectPLanguages.getText().toString().trim();
+				projectDescription = etSetProjectDescription.getText().toString().trim();
+				
+				allProjectTitleFromDB = "";
+				allProjectTitleFromDB = dBHelperAdapter.getAllProjectTitles();
+				arAllProjectTitleFromDB = allProjectTitleFromDB.split("\\|");
 				
 				// to prevent insert empty project to db
 				if(projectTitle.trim().isEmpty() || programmingLanguages.trim().isEmpty() || 
 						projectDescription.trim().isEmpty())
 				{
-					System.out.println("Please fill in all 3 fields, projectTitle.");
+					Toast.makeText(getApplicationContext(), 
+							"Please fill in all 3 fields, projectTitle.", Toast.LENGTH_LONG).show();
+				}
+				else if(Arrays.asList(arAllProjectTitleFromDB).contains(projectTitle))
+				{
+					Toast.makeText(getApplicationContext(), 
+							"Project Title already exist, enter new title.", Toast.LENGTH_LONG).show();
 				}
 				else
 				{

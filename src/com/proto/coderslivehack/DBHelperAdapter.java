@@ -343,7 +343,23 @@ public class DBHelperAdapter
 			int programmingLanguagesColIndex = cursor.getColumnIndex(DBHelper.PROGRAMMING_LANGUAGES);
 			String programmingLanguages = cursor.getString(programmingLanguagesColIndex);
 
-			stringBuffer.append(programmingLanguages + " ");
+			stringBuffer.append(programmingLanguages + "|");
+		}
+		return stringBuffer.toString();
+	}
+	
+	public String getAllProjectTitles()
+	{
+		SQLiteDatabase sQLiteDatabase = dBHelper.getWritableDatabase();
+		String[] columns = {DBHelper.PROJECT_TITLE};
+		Cursor cursor = sQLiteDatabase.query(DBHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+		StringBuffer stringBuffer = new StringBuffer();
+		
+		while(cursor.moveToNext())
+		{
+			int projectTitleColIndex = cursor.getColumnIndex(DBHelper.PROJECT_TITLE);
+			String projectTitle = cursor.getString(projectTitleColIndex);
+			stringBuffer.append(projectTitle + "|");
 		}
 		return stringBuffer.toString();
 	}

@@ -5,15 +5,6 @@
     tools:context="${relativePackage}.${activityClass}" >
 
     <TextView
-        android:id="@+id/tvGraphLabel"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:text="Graph of Projects"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
         android:id="@+id/tvXaxisLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -35,9 +26,8 @@
         android:id="@+id/spFilterProgrammingLanguage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/btnFilter"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvGraphLabel" />
+        android:layout_toRightOf="@+id/btnFilter" />
  
     <Button
         android:id="@+id/btnGraphToHome"

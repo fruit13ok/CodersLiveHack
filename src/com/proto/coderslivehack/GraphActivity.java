@@ -101,6 +101,9 @@ public class GraphActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Graph of Projects");
+		getActionBar().setIcon(R.drawable.ic_action_graph);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);
 		
@@ -145,7 +148,7 @@ public class GraphActivity extends Activity
 		
 		allLanguageFromDB = "";
 		allLanguageFromDB = dBHelperAdapter.getAllLanguages();
-		arAllLanguageFromDB = allLanguageFromDB.split(" ");
+		arAllLanguageFromDB = allLanguageFromDB.split("\\|");
 		
 		// TODO:
 		// when have time make grade and distraction always come in pair, may be in createtaskactivity,

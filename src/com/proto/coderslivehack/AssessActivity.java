@@ -35,6 +35,9 @@ public class AssessActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Self-Assessment");
+		getActionBar().setIcon(R.drawable.ic_action_assess);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_assess);
 

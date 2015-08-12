@@ -43,6 +43,9 @@ public class GetGitCommitActivity extends Activity
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
+		setTitle("Number of Github Commits");
+		getActionBar().setIcon(R.drawable.ic_action_git2);
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get_git_commit);
 		
