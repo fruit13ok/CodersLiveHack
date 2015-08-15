@@ -19,8 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/tvXaxisLabel"
-        android:layout_below="@+id/spFilterProgrammingLanguage"
-        android:background="@android:color/holo_blue_light" />
+        android:layout_below="@+id/spFilterProgrammingLanguage" />
 
     <Spinner
         android:id="@+id/spFilterProgrammingLanguage"
@@ -36,7 +35,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="Home" />
+        android:text="Home"
+        android:backgroundTint="#B9F6CA" />
 
     <TextView
         android:id="@+id/tvSelectedProjectInfo"
@@ -44,7 +44,7 @@
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/btnGraphToHome"
-        android:background="@android:color/holo_green_light"
+        android:background="#B9F6CA"
         android:scrollbars="vertical"
         android:text="selected project information"
         android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignBottom="@+id/spFilterProgrammingLanguage"
-        android:text="Filter" />
+        android:text="Filter"
+        android:backgroundTint="#B9F6CA" />
 
 </RelativeLayout>

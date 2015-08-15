@@ -18,7 +18,7 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/etSetProjectTitle"
         android:ems="10"
-        android:hint="Programming languages this project use (separate by comma)."
+        android:hint="Programming languages comma separate"
         android:imeOptions="actionNext"
         android:inputType="text" />
 
@@ -31,7 +31,8 @@
         android:ems="10"
         android:hint="Short project description."
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="textMultiLine"
+        android:singleLine="false" />
 
     <EditText
         android:id="@+id/etSetProjectTitle"
@@ -59,7 +60,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Add"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:backgroundTint="#B9F6CA" />
 
         <Button
             android:id="@+id/btnCreateTaskToHome"
@@ -67,7 +69,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Home"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:backgroundTint="#B9F6CA" />
 
         <Button
             android:id="@+id/btnCreateTaskToSelectTask"
@@ -75,7 +78,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Select Task"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:backgroundTint="#B9F6CA" />
     </LinearLayout>
 
 </RelativeLayout>

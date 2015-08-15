@@ -26,9 +26,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -103,6 +106,13 @@ public class GraphActivity extends Activity
 	{
 		setTitle("Graph of Projects");
 		getActionBar().setIcon(R.drawable.ic_action_graph);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
+		
+		// setStatusBar need api 21 now use 14
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		window.setStatusBarColor(Color.parseColor("#303F9F"));
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_graph);

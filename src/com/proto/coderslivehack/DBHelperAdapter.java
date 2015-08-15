@@ -813,4 +813,72 @@ public class DBHelperAdapter
 			}
 		}
 	}
+	
+	/**
+	 * check if database and its table got created.
+	 * @return
+	 */
+	public boolean isTableExists()
+	{
+		SQLiteDatabase mDatabase = dBHelper.getReadableDatabase();
+	    Cursor cursor = mDatabase.rawQuery(
+	    		"select DISTINCT tbl_name from sqlite_master where tbl_name = '"+
+	    				"projectTable"+"'", null);
+	    if(cursor!=null)
+	    {
+	        if(cursor.getCount()>0)
+	        {
+	            cursor.close();
+	            return true;
+	        }
+	        cursor.close();
+	    }
+	    return false;
+	}
+	
+	/**
+	 * check if any data exist, it mean at least 1 project created store in database.<br>
+	 * if true allow "select" page, not "graph" pages.
+	 * if false not allow "select" and "graph" pages.
+	 * @return
+	 */
+	public boolean isDataExists()
+	{
+		SQLiteDatabase db = dBHelper.getWritableDatabase();
+		Cursor mcursor = db.rawQuery("SELECT * FROM "+"projectTable", null);
+		if(mcursor!=null)
+	    {
+	        if(mcursor.getCount()>0)
+	        {
+	        	mcursor.close();
+	            return true;
+	        }
+	        mcursor.close();
+	    }
+	    return false;
+	}
+	
+	/**
+	 * check if graph data exist, it mean at least 1 project totally done and assessed.
+	 * if true allow "graph" pages.
+	 * if false not allow "graph" pages.
+	 * @return
+	 */
+	public boolean isGraphableDataExists()
+	{
+		SQLiteDatabase db = dBHelper.getWritableDatabase();
+		Cursor ncursor = db.rawQuery(
+				"SELECT * FROM "+"projectTable"+
+						" WHERE productiveLevel IS NOT null OR productiveLevel != ''", null);
+		if(ncursor!=null)
+	    {
+	        if(ncursor.getCount()>0)
+	        {
+	        	ncursor.close();
+	            return true;
+	        }
+	        ncursor.close();
+	    }
+	    return false;
+	}
 }

@@ -4,8 +4,12 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,6 +37,13 @@ public class CreateTaskActivity extends Activity
 	{
 		setTitle("Create New Task");
 		getActionBar().setIcon(R.drawable.ic_action_create_list);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
+		
+		// setStatusBar need api 21 now use 14
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		window.setStatusBarColor(Color.parseColor("#303F9F"));
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_task);
@@ -41,9 +52,23 @@ public class CreateTaskActivity extends Activity
 		etSetProjectPLanguages = (EditText) findViewById(R.id.etSetProjectPLanguages);
 		etSetProjectDescription = (EditText) findViewById(R.id.etSetProjectDescription);
 		
+		btnAddProjectToDB = (Button) findViewById(R.id.btnAddProjectToDB);
+		btnCreateTaskToHome = (Button) findViewById(R.id.btnCreateTaskToHome);
+		btnCreateTaskToSelectTask = (Button) findViewById(R.id.btnCreateTaskToSelectTask);
+		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		
-		btnAddProjectToDB = (Button) findViewById(R.id.btnAddProjectToDB);
+		if(dBHelperAdapter.isDataExists())
+		{
+			System.out.println("mytab: data exist");
+			btnCreateTaskToSelectTask.setEnabled(true);
+		}
+		else
+		{
+			System.out.println("mytab: data not exist");
+			btnCreateTaskToSelectTask.setEnabled(false);
+		}
+		
 		btnAddProjectToDB.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -85,6 +110,7 @@ public class CreateTaskActivity extends Activity
 					{
 						Toast.makeText(getApplicationContext(), "successful inserted a project", 
 								Toast.LENGTH_LONG).show();
+						btnCreateTaskToSelectTask.setEnabled(true);
 					}
 					
 					// TODO:
@@ -94,7 +120,6 @@ public class CreateTaskActivity extends Activity
 				}
 			}
 		});
-		btnCreateTaskToHome = (Button) findViewById(R.id.btnCreateTaskToHome);
 		btnCreateTaskToHome.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -105,7 +130,6 @@ public class CreateTaskActivity extends Activity
 				finish();
 			}
 		});
-		btnCreateTaskToSelectTask = (Button) findViewById(R.id.btnCreateTaskToSelectTask);
 		btnCreateTaskToSelectTask.setOnClickListener(new OnClickListener()
 		{
 			@Override

@@ -71,7 +71,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginTop="30dp"
-        android:text="How often were you distracted during task?"
+        android:text="Amount of distraction during task?"
         android:textAppearance="?android:attr/textAppearanceMedium" />
     <Spinner
         android:id="@+id/spDistraction"
@@ -105,10 +105,10 @@
         android:layout_marginTop="30dp"
         android:ems="10"
         android:maxLength="140"
-        android:hint="Add a Comment to task (Optional) limit 140 chars"
-        android:singleLine="true"
+        android:hint="Comment (Optional)"
         android:imeOptions="actionDone"
-        android:inputType="text" />
+        android:inputType="textMultiLine"
+        android:singleLine="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -123,7 +123,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Submit" />
+            android:text="Submit"
+            android:backgroundTint="#B9F6CA" />
 
         <Button
             android:id="@+id/btnAssessToHome"
@@ -131,7 +132,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Home" />
+            android:text="Home"
+            android:backgroundTint="#B9F6CA" />
 
         <Button
             android:id="@+id/btnAssessToGraph"
@@ -139,7 +141,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Graph" />
+            android:text="Graph"
+            android:backgroundTint="#B9F6CA" />
     </LinearLayout>
 
 </RelativeLayout>

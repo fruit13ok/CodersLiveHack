@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -30,13 +34,19 @@ public class AssessActivity extends Activity
     String mCurrProject;
 	String[] projectInfo;
 	String mTaskCommentsValues;
-
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		setTitle("Self-Assessment");
 		getActionBar().setIcon(R.drawable.ic_action_assess);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
+		
+		// setStatusBar need api 21 now use 14
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		window.setStatusBarColor(Color.parseColor("#303F9F"));
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_assess);
@@ -106,6 +116,16 @@ public class AssessActivity extends Activity
 		
 		btnAssessToGraph = (Button) findViewById(R.id.btnAssessToGraph);
 //		btnAssessToGraph.setVisibility(View.GONE);
+		if(mDBHelperAdapter.isGraphableDataExists())
+		{
+			System.out.println("mytab: graph data exist");
+			btnAssessToGraph.setEnabled(true);
+		}
+		else
+		{
+			System.out.println("mytab: graph data not exist");
+			btnAssessToGraph.setEnabled(false);
+		}
 		
 		btnSubmitToDB = (Button) findViewById(R.id.btnSubmitToDB);
 		btnSubmitToDB.setOnClickListener(new OnClickListener()
@@ -137,6 +157,7 @@ public class AssessActivity extends Activity
 
 //				btnAssessToHome.setVisibility(View.VISIBLE);
 //				btnAssessToGraph.setVisibility(View.VISIBLE);
+				btnAssessToGraph.setEnabled(true);
 			}
 		});
 		btnAssessToHome.setOnClickListener(new OnClickListener()

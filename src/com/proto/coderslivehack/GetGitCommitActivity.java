@@ -15,12 +15,16 @@ import org.json.JSONException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +49,13 @@ public class GetGitCommitActivity extends Activity
 	{
 		setTitle("Number of Github Commits");
 		getActionBar().setIcon(R.drawable.ic_action_git2);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
+		
+		// setStatusBar need api 21 now use 14
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		window.setStatusBarColor(Color.parseColor("#303F9F"));
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get_git_commit);

@@ -7,10 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -56,6 +60,13 @@ public class TimerActivity extends Activity
 	{
 		setTitle("Timer");
 		getActionBar().setIcon(R.drawable.ic_action_timer);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
+		
+		// setStatusBar need api 21 now use 14
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		window.setStatusBarColor(Color.parseColor("#303F9F"));
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timer);

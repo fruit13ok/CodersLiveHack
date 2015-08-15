@@ -11,7 +11,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:text="0 : 0"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:textSize="50sp" />
 
     <LinearLayout
         android:id="@+id/llSelectAndGitButtons"
@@ -63,7 +63,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
-            android:text="Complete" />
+            android:text="Complete"
+            android:backgroundTint="#B9F6CA" />
 
         <Button
             android:id="@+id/btnMarkProjectAbandon"
@@ -71,7 +72,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
-            android:text="Abandon" />
+            android:text="Abandon"
+            android:backgroundTint="#B9F6CA" />
     </LinearLayout>
 
     <TextView
@@ -119,7 +121,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Home" />
+            android:text="Home"
+            android:backgroundTint="#B9F6CA" />
 
         <Button
             android:id="@+id/btnTimerToAssess"
@@ -127,7 +130,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:text="Assess" />
+            android:text="Assess"
+            android:backgroundTint="#B9F6CA" />
     </LinearLayout>
 
 </RelativeLayout>

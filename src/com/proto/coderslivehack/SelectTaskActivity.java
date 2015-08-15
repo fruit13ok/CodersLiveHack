@@ -8,10 +8,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -39,6 +42,13 @@ public class SelectTaskActivity extends Activity
 	{
 		setTitle("Your Projects");
 		getActionBar().setIcon(R.drawable.ic_action_task);
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3F51B5")));
+		
+		// setStatusBar need api 21 now use 14
+		Window window = getWindow();
+		window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+		window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+		window.setStatusBarColor(Color.parseColor("#303F9F"));
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_select_task);
@@ -184,16 +194,16 @@ public class SelectTaskActivity extends Activity
 			{
 				if(!curProjGrade.equalsIgnoreCase("null") && !curProjDistraction.equalsIgnoreCase("null"))
 				{
-					row.setBackgroundColor(Color.GREEN);
+					row.setBackgroundColor(Color.parseColor("#A5D6A7"));
 				}
 				else
 				{
-					row.setBackgroundColor(Color.YELLOW);
+					row.setBackgroundColor(Color.parseColor("#FFF59D"));
 				}
 			}
 			else
 			{
-				row.setBackgroundColor(Color.RED);
+				row.setBackgroundColor(Color.parseColor("#EF9A9A"));
 			}
 			
 			TextView tvCLIProjectTile = (TextView) row.findViewById(R.id.tvCLIProjectTile);
