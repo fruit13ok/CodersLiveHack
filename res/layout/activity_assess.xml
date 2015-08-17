@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Submit"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnAssessToHome"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Home"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnAssessToGraph"
@@ -142,7 +142,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Graph"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
 </RelativeLayout>

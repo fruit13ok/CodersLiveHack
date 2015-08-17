@@ -13,20 +13,12 @@
         android:text="2). Create Task Guide"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvRagCreateTaskGuide"
-        android:text="Enter your project title, programming languages, and a short project description. Press Add button to add project to database." />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tvRagCreateTaskGuide"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/guide_create_task" />
+        android:src="@drawable/guide_create" />
 
 </RelativeLayout>

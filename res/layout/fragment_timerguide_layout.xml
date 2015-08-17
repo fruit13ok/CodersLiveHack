@@ -13,19 +13,11 @@
         android:text="4). Timer Guide"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-	<TextView
-	    android:id="@+id/textView1"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_below="@+id/tvFragTimerGuide"
-	    android:text="Use timer to time your work accumulatively. Timer will cycle between 50 minutes work and 10 minutes break. Once you press complete or abandon, whole project will not time anymore. Inorder to show project in the graph, press assess button to grade the project." />
-
 	<ImageView
 	    android:id="@+id/imageView1"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_below="@+id/textView1"
+	    android:layout_below="@+id/tvFragTimerGuide"
 	    android:layout_centerHorizontal="true"
 	    android:src="@drawable/guide_timer" />
     

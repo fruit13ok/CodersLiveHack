@@ -206,8 +206,9 @@ public class TimerActivity extends Activity
 			{
 				setButtonAndFlagState(false, true, true, false, false, false);
 
+				//TODO: commented out for test
                 //Notify the user that CountDownTimer is canceled/stopped
-				tvTimer.setText("CountDownTimer stopped.");
+//				tvTimer.setText("CountDownTimer stopped.");
 				
 				insertTimeSpentToDB();
 			}
@@ -306,8 +307,9 @@ public class TimerActivity extends Activity
                 	long cdInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
                 	long cdInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
                 	long cdRemainSecond = cdInSeconds - TimeUnit.MINUTES.toSeconds(cdInMinutes);
+                	
                 	tvTimer.setText("" + String.format(Locale.US, 
-                			"%d min : %d sec", 
+                			"%d M : %d S", 
                 			cdInMinutes, cdRemainSecond));
                 	
                     //Put count down timer remaining time in a variable
@@ -362,7 +364,7 @@ public class TimerActivity extends Activity
                 	long cdInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
                 	long cdRemainSecond = cdInSeconds - TimeUnit.MINUTES.toSeconds(cdInMinutes);
                 	tvTimer.setText("" + String.format(Locale.US, 
-                			"%d min : %d sec", 
+                			"%d M : %d S", 
                 			cdInMinutes, cdRemainSecond));
                 	tvWorkOrBreakTime.setText("You are taking a break");
                 }

@@ -13,19 +13,11 @@
         android:text="5). Assess Guide"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvFragAssessGuide"
-        android:text="Enter amount of distraction, grade yourself, and add short optional comment. Press submit to finally finish a whole project." />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tvFragAssessGuide"
         android:layout_centerHorizontal="true"
         android:src="@drawable/guide_assess" />
 

@@ -26,28 +26,32 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"
+            android:backgroundTint="#FFFFFF" />
         
         <Button
             android:id="@+id/btnPauseTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"
+            android:backgroundTint="#FFFFFF" />
 
         <Button
             android:id="@+id/btnResumeTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"
+            android:backgroundTint="#FFFFFF" />
 
         <Button
             android:id="@+id/btnStopTimer"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.25" />
+            android:layout_weight="0.25"
+            android:backgroundTint="#FFFFFF" />
     </LinearLayout>
 
     <LinearLayout
@@ -64,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="Complete"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnMarkProjectAbandon"
@@ -73,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.25"
             android:text="Abandon"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
     <TextView
@@ -122,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Home"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnTimerToAssess"
@@ -131,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Assess"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
 </RelativeLayout>

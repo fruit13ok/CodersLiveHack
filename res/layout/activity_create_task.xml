@@ -61,7 +61,7 @@
             android:layout_height="wrap_content"
             android:text="Add"
             android:layout_weight="1"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnCreateTaskToHome"
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:text="Home"
             android:layout_weight="1"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnCreateTaskToSelectTask"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:text="Select Task"
             android:layout_weight="1"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
 </RelativeLayout>

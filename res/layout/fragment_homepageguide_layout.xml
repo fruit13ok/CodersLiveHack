@@ -14,11 +14,23 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="Guide text is in orange color."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffc400" />
+
+    <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvFragHomePageGuide"
-        android:text="Swipe through the guides to learn it." />
+        android:layout_above="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:text="Swipe to see the guides."
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ffc400" />
 
 </RelativeLayout>

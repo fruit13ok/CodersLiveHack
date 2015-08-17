@@ -12,7 +12,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:text="Select"
-        android:backgroundTint="#B9F6CA" />
+        android:backgroundTint="#3949ab" />
 
     <ListView
         android:id="@+id/lvProjectList"
@@ -32,7 +32,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:text="Home"
-        android:backgroundTint="#B9F6CA" />
+        android:backgroundTint="#3949ab" />
 
     <Button
         android:id="@+id/btnSelectTaskToDummyUpdate"

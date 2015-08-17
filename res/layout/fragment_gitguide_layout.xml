@@ -13,19 +13,11 @@
         android:text="7). Git Guide"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/tvFragGitGuide"
-        android:text="If uploaded you project to GitHub, you can enter your account name and repository name to find out number of commit you got. This page need internet connection." />
-
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/tvFragGitGuide"
         android:layout_centerHorizontal="true"
         android:src="@drawable/guide_git" />
 

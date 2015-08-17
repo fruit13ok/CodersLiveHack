@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Number of commit"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnNumGitCommitToHome"
@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Home"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
 </RelativeLayout>

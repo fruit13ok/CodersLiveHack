@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Select Task"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnHomeToNumGitCommit"
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Github Commit Data"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
     <LinearLayout
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Create Task"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
 
         <Button
             android:id="@+id/btnHomeToGraph"
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
             android:text="Graphical data"
-            android:backgroundTint="#B9F6CA" />
+            android:backgroundTint="#3949ab" />
     </LinearLayout>
 
 </RelativeLayout>
