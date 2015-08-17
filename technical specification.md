@@ -27,7 +27,7 @@ Using SQLiteDatabase and SQLiteOpenHelper to create a helper and adapter class t
 
 	4. `database table`  
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_database.png)
 
 
 3. **General Layout**  
@@ -49,7 +49,7 @@ It use for displaying user guides.
 There are 4 buttons for nevigate to 4 pages:  
 Create task page, Select task page, Graph page, GitHub commit page.
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_home.png)
 
 
 5. **Create task page**  
@@ -63,7 +63,7 @@ There is 1 button to submit the input to database.
 There are 2 buttons for nevigate to 2 pages:  
 Home page, Select task page
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_create.png)
 
 
 6. **Select task page**  
@@ -80,7 +80,7 @@ Display each recorded project.
 There are 2 buttons for nevigate to 2 pages:  
 Work timer page, Home page.
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_select.png)
 
 
 7. **Work timer page**  
@@ -96,7 +96,7 @@ There are 2 buttons use to change project progress.
 There are 2 buttons for nevigate to 2 pages:  
 Home page, Self assessment page.
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_timer.png)
 
 
 8. Self assessment page
@@ -114,7 +114,7 @@ There is 1 button use to submit the input to database.
 There are 2 buttons for nevigate to 2 pages:  
 Home page, Graph page.
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_assess.png)
 
 
 9. **Graph page**  
@@ -132,7 +132,7 @@ There is 1 button to confirm the dropdown list selection.
 There is 1 button for nevigate to 1 pages:  
 Home page
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_graph.png)
 
 
 10. **GitHub commit page**  
@@ -149,14 +149,14 @@ There is 1 button for submit the user input and do fetch.
 There is 1 button for nevigate to 1 pages:  
 Home page
 
-add screen shoots...
+![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_git.png)
 
 
 11. **3rd party API**  
 	1. `GraphView 4.0.4`  
 Used to drew graph.
 
-add url...
+[android-graphview.org](http://www.android-graphview.org/)
 
 
 12. **Utility created**  
@@ -171,6 +171,8 @@ add url...
 		Used to edit image.
 		3. `MS-Paint`  
 		Used to edit image.
+		4. `SQLite Manager` (on FireFox)  
+		Display sqlite database file.
 	2. `general styles`  
 		1. `App icon`  
 		add image ...
