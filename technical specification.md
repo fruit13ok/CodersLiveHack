@@ -175,7 +175,7 @@ Used to drew graph.
 		Display sqlite database file.
 	2. `general styles`  
 		1. `App icon`  
-		add image ...
+		![alt text](http://hills.ccsf.edu/~yliu192/CodersLiveHack/guide_logo.png)
 		2. `Colors`  
 		StatusBar #303F9F  
 		ActionBar #3F51B5  
