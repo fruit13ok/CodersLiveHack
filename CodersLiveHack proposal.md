@@ -54,3 +54,42 @@ Development of CodersLiveHack consist of 10 milestones completed over the course
     Not store GitHub data, commit data can be change, request each time.  
     -schema: _id, proj name, proj task, project tag (user define), languages, project start timestamp (x-axis date and time), task time spent until complete or abandon (y-axis duration), total project time spend, productive level, distraction level.  
       
+3. **Tentative Milestones** [10 weeks total, 400 hours total]  
+  1. `Basic interface and navigation` [24 hours subtotal]  
+  After this stage user can navigate between each pages, and have a basic feel of this app.  
+  Each pages basic interface. [8 hours]  
+  Placeholders for input / output elements. [9 hours]  
+  Navigation between pages. [7 hours]  
+  2. `Setup task list page` [2 hours subtotal]  
+  After this stage user can input one task at a time to build a task list and display the list.  
+  Text field for user input. [1 hour]  
+  Task list to display whole day's tasks. [1 hour]  
+  3. `Tracking timer page` [8 hours subtotal]  
+  After this stage user can select a task and start to track it with timer, each task will show time usage.  
+  Timer page for selected task with buttons. [3 hours]  
+  Change basic list to custom list with timestamp. [5 hours]  
+  4. `Database` [40 hours subtotal]  
+  After this stage user can save each daily task list result to SQLite data and query the data from it.  
+  Database table for list item, productive rating, distraction rating, and time stamp. [40 hours]  
+  5. `Request GitHub commit data page` [20 hours subtotal]  
+  Text field for user input from GitHub user account name and repository name. [1 hour]  
+  Http request from GitHub. [19 hours]  
+  6. `Graph setup page` [20 hours subtotal]  
+  Text field and Spinner for user input info to build the graph. [2 hour]  
+  Use String match search the recorded data from database. [7 hours]  
+  Generate list of search result with checkbox. [11 hours]  
+  7. `Graph result page` [16 hours subtotal]  
+  Get graph data from Graph setup page. [1 hour]  
+  Bar chart and line graph, use dummy data for test expected result. [15 hours]  
+  8. `Debug and testing` [8 hours subtotal]  
+  Test on both emulator and phone for the contents. [3 hours]  
+  Test correctness of the calculation. [5 hours]  
+  9. `Refinement` [22 hours subtotal]  
+  Add font, color, search for free images, and logo icon. [11 hours]  
+  Refine contents and features. [11 hours]  
+  10. `Repeat step 8 and 9` [200 hours subtotal]  
+  Repeat testing and refinements. [until satisfy or spent 200 hours]  
+  11. `Documentation` [40 hours subtotal]  
+  Write user guide. [8 hours]  
+  Write technical specification. [24 hours]  
+  Write powerpoint presentation for the app. [8 hours]  
