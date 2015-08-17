@@ -1,10 +1,6 @@
 # Coders Live Hack Project
 
-- - -
-
 ## Tecgnical Specification
-
-- - -
 
 1. **Hardware Spec**  
 	1. `device`  
