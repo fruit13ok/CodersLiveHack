@@ -31,6 +31,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * If user had uploaded their project to GitHub, this page can fetch the number of commits from GitHub.<br>
+ * This page need to have internet connection to do the fetching.
+ */
 public class GetGitCommitActivity extends Activity
 {
 	EditText etGithubAccount, etGithubRepository;
@@ -59,10 +63,6 @@ public class GetGitCommitActivity extends Activity
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get_git_commit);
-		
-//		cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-//		activeNetwork = cm.getActiveNetworkInfo();
-//		isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 		
 		etGithubAccount = (EditText) findViewById(R.id.etGithubAccount);
 		etGithubRepository = (EditText) findViewById(R.id.etGithubRepository);
@@ -113,6 +113,12 @@ public class GetGitCommitActivity extends Activity
 		});
 	}
 	
+	/**
+	 * This class will asynchronous do http Get request on the given url.<br>
+	 * Url is the url pass from build-in execute(urls...) method, which is params[0].<br>
+	 * The return String data from doInBackground() will pass to onPostExecute() param.<br>
+	 * That data is a single String of JSON.
+	 */
 //	private class HttpGetTask extends AsyncTask<Void, Void, String>
 	private class HttpGetTask extends AsyncTask<String, Void, String>
 	{
@@ -192,8 +198,19 @@ public class GetGitCommitActivity extends Activity
 		}
 	}
 	
+	/**
+	 * Parse the given String of JSON.<br>
+	 * In this case the String of JSON is a JSON array.<br>
+	 * Also the array length is the number of commit.<br>
+	 * <br>
+	 * NOTE: I did not do any checking to make sure if is JSON array or JSON object,<br>
+	 * next upgrade need to check both to be robust.
+	 * @param myStrData String of JSON
+	 * @return array length as number of commit
+	 */
 	public int parseNumOfCommit(String myStrData)
 	{
+		// TODO: check JSONObject or JSONArray
 		JSONArray ja = null;
 		try
 		{
@@ -204,6 +221,9 @@ public class GetGitCommitActivity extends Activity
 			e.printStackTrace();
 		}
 		System.out.println("mytab: length = " + ja.length());
+		
+		// I think Github API will upgrade more toward JSON result,
+		// so in the future should check if can work with JSONObject and JSONArray
 //		for (int i = 0; i < ja.length(); i++)
 //		{
 //	        JSONObject explrObject = ja.getJSONObject(i);

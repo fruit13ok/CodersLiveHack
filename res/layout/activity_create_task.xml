@@ -4,13 +4,6 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
-    <!--
-       Added tvTimeEstimate, and spTimeEstimation.
-
-        - Can copy and paste two widgets no other changes were
-          made to activity_create_task.xml
-   -->
-
     <EditText
         android:id="@+id/etSetProjectPLanguages"
         android:layout_width="match_parent"

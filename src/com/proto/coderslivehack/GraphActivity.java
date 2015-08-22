@@ -42,28 +42,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
-// TODO:
-// to solve the cutoff first DataPoint problem,
-// put a dummy DataPoint in front on the ArrayList
-
-/*
- * this version I removed the RangSeekBar because this third party API is does not go well with GraphView API.
- * so I just use GraphView enable it scrolling.
- * 
- * problem in this version the Series reset with new data, 
- * the updating is not consistent for bar graph, first point hidden on line graph,
- * maybe about this API have problem with openGL, may be threading problem.
- * These problems happen both in single object use update or create new object every time.
+/**
+ * This page will graph 2 data lines "grade" (dotted with bubble) and "distraction level" (red)
+ * to represent the projects results.<br> 
+ * User can press the bubble to see more info of the project, swipe to see more of the graph, 
+ * and filter the project by programming language.
  */
 public class GraphActivity extends Activity
 {
-	// these 2 use to format date
+	// use to format date
 	String datePattern;
 	Locale currentLocale;
-//	SimpleDateFormat sdf = new SimpleDateFormat(datePattern, Locale.US);
 	SimpleDateFormat sdf;
 	
-	// spinner is not make to use for executing code, should add a button later to execute the selected spinner
 	Spinner spFilterProgrammingLanguage;
 	ArrayList<String> alFilterProgrammingLanguage;
 	ArrayAdapter<String> aaFilterProgrammingLanguage;
@@ -71,14 +62,13 @@ public class GraphActivity extends Activity
 	String[] arAllLanguageFromDB;
 	Button btnFilter;
 	
-	// use to navigate 
 	Button btnGraphToHome;
 	
-	// use these 3 to label the graph x y axis, may be legend too, because the spacing of this API have some problem,
+	// label the graph x y axis, may be legend too, because the spacing of this API have some problem,
 	// use tvSelectedProjectInfo to display info of a data point to viewer.
 	TextView tvXaxisLabel, tvSelectedProjectInfo;
 	
-	// use to access database
+	// these are use to access database
 	DBHelperAdapter dBHelperAdapter;
 	String dataWholeRow;
 	
@@ -132,14 +122,14 @@ public class GraphActivity extends Activity
 		strDBDateAndDistractions = "";
 		dataWholeRow = "";
 		
-		//
+
 		graph = (GraphView) findViewById(R.id.graph);
 //		series = new BarGraphSeries<DataPoint>();
 		seriesDateGrade = new LineGraphSeries<DataPoint>();
 		// set date label formatter
 		gridLabelRenderer = graph.getGridLabelRenderer();
 		// set manual x bounds
-		// the following given feature have problem.
+		// the following given feature have problem, I am not using it.
 		// !!!add / minus day with a double number: num_of_day*24*60*60*1000, ONLY within a month!!!
 		viewport = graph.getViewport();
 		
@@ -160,8 +150,6 @@ public class GraphActivity extends Activity
 		allLanguageFromDB = dBHelperAdapter.getAllLanguages();
 		arAllLanguageFromDB = allLanguageFromDB.split("\\|");
 		
-		// TODO:
-		// when have time make grade and distraction always come in pair, may be in createtaskactivity,
 		// Dynamically add languages from db to spinner,
 		// only add language that at least 1 project totally done.
 		spFilterProgrammingLanguage = (Spinner) findViewById(R.id.spFilterProgrammingLanguage);
@@ -235,12 +223,10 @@ public class GraphActivity extends Activity
 			{
 //				updateGraph(arrDataPoints);
 				initGraph(arrDateGradeDataPoints, arrDateDistractionDataPoints);
-				//TODO
 				tvSelectedProjectInfo.setText(strDBDateAndGrades);
 			}
 		});
 		
-		//
 		btnGraphToHome = (Button) findViewById(R.id.btnGraphToHome);
 		btnGraphToHome.setOnClickListener(new OnClickListener()
 		{
@@ -263,9 +249,12 @@ public class GraphActivity extends Activity
 	public Date stringToDate(String strDate)
 	{
 		Calendar cal = Calendar.getInstance();
-		try {
+		try
+		{
 			cal.setTime(sdf.parse(strDate));
-		} catch (ParseException e) {
+		}
+		catch (ParseException e)
+		{
 			e.printStackTrace();
 		}
 		Date d = cal.getTime();
@@ -276,10 +265,10 @@ public class GraphActivity extends Activity
 	 * Convert the given string of query date grade result into ArrayList of type DataPoint.<br>
 	 * mStrDBDateAndGrades is the single string contain whole query result from database.<br>
 	 * mStrDBDateAndGrades has 2 delimiters:<br>
-	 * 		-"single space" separate date and grade,<br>
+	 * 		-"|" separate date and grade,<br>
 	 * 		-"new line" separate each row of record.<br>
 	 * @param mStrDBDateAndGrades
-	 * @return
+	 * @return ArrayList of DataPoint
 	 */
 	public ArrayList<DataPoint> datesGradesToDataPoints(String mStrDBDateAndGrades)
 	{
@@ -289,22 +278,24 @@ public class GraphActivity extends Activity
 		String oneGrade = null;
 		for (int i = 0; i < strDBDateAndGradeRows.length; i++)
 		{
-//			System.out.println(i + ": " + strDBDateAndGradeRows[i]);
-			
-			// default delimiter is already space
-			// I did not check empty token, just assume getting 2 tokens, should add checking later
+			//TODO: I did not check empty token, just assume getting 2 tokens, should add checking later
 			stDateGrade = new StringTokenizer(strDBDateAndGradeRows[i], "\\|");
 			oneDate = stringToDate(stDateGrade.nextElement().toString());
 			oneGrade = stDateGrade.nextElement().toString();
 			alDataPoints.add(new DataPoint(oneDate, Double.parseDouble(oneGrade)));
 		}
-		// need to convert from double to Date
-//		System.out.println( "mytab: " + 
-//		new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(new Date( (long)( alDataPoints.get(0).getX() ) ) ) + 
-//		", " + alDataPoints.get(0).getY());
 		return alDataPoints;
 	}
 	
+	/**
+	 * Convert the given string of query date distraction result into ArrayList of type DataPoint.<br>
+	 * mStrDBDateAndDistractions is the single string contain whole query result from database.<br>
+	 * mStrDBDateAndDistractions has 2 delimiters:<br>
+	 * 		-"|" separate date and grade,<br>
+	 * 		-"new line" separate each row of record.<br>
+	 * @param mStrDBDateAndDistractions
+	 * @return ArrayList of DataPoint
+	 */
 	public ArrayList<DataPoint> datesDistractionsToDataPoints(String mStrDBDateAndDistractions)
 	{
 		ArrayList<DataPoint> alDataPoints = new ArrayList<DataPoint>();
@@ -321,11 +312,11 @@ public class GraphActivity extends Activity
 		return alDataPoints;
 	}
 	
-
 	/**
-	 * initialize the graph, data, and everything, and display the graph.
-	 * @param iArDGDP
-	 * @param iArDDDP
+	 * Initialize a new graph, data, and everything, and display the graph.<br>
+	 * I choose not to use the next method updateGraph() for stability and robust.
+	 * @param iArDGDP array of date and grade data point
+	 * @param iArDDDP array of date and distraction data point
 	 */
 	public void initGraph(DataPoint[] iArDGDP, DataPoint[] iArDDDP)
 	{
@@ -340,7 +331,8 @@ public class GraphActivity extends Activity
 	}
 	
 	/**
-	 * change new set of data points, remove the series and add it back to graphview.
+	 * Change new set of data points, remove the series and add it back to graphview.
+	 * Update not yet working, not in use.
 	 * @param nArDP
 	 */
 //	public void updateGraph(DataPoint[] nArDP)
@@ -355,7 +347,6 @@ public class GraphActivity extends Activity
 ////		try {
 ////			new Thread().sleep(5000);
 ////		} catch (InterruptedException e) {
-////			// TODO Auto-generated catch block
 ////			e.printStackTrace();
 ////		}
 //		graph.addSeries(seriesDateGrade);
@@ -363,9 +354,9 @@ public class GraphActivity extends Activity
 //	}
 	
 	/**
-	 * Series is to set how the data point and line, look and act.<br>
+	 * Series is to set how the data point and line, look and act for grade line.<br>
 	 * The data point listener is here.
-	 * @param mArDP
+	 * @param mArDP array of data point
 	 */
 	public void setDateGradeSeries(DataPoint[] mArDP)
 	{
@@ -385,7 +376,8 @@ public class GraphActivity extends Activity
 		paint.setPathEffect(new DashPathEffect(new float[]{8, 5}, 0));
 		seriesDateGrade.setCustomPaint(paint);
 		
-		// setting for bar graph
+		// the setting for bar graph
+		// I am using line graph
 //		series.resetData(mArDP);
 //		series.setTitle("series title");
 //		series.setColor(Color.GREEN);
@@ -405,34 +397,12 @@ public class GraphActivity extends Activity
 //			}
 //		});
 		
-//		seriesDateGrade.setOnDataPointTapListener(new OnDataPointTapListener()
-//		{
-//		    @Override
-//		    public void onTap(Series series, DataPointInterface dataPoint)
-//		    {
-//		    	// To get date from double type to a Date type
-//		    	long l = (long) (dataPoint.getX());
-//		    	Date d = new Date(l);
-//		    	String s = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(d);
-//		        Toast.makeText(getApplicationContext(), 
-//		        		"date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
-//		        
-//		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
-//		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | com\n" + 
-//		        		DataWholeRow + "\n" + strDBDateAndGrades);
-//		    }
-//		});
-		
-		/**
-         * Joel Version Of method call setOnDataPointTapListener
-         */
         seriesDateGrade.setOnDataPointTapListener(new OnDataPointTapListener()
         {
             @Override
             public void onTap(Series series, DataPointInterface dataPoint)
             {
-                // To get date from double type to a Date type
+                // To get date from double type to a String type through long and Date
                 long l = (long) (dataPoint.getX());
                 Date d = new Date(l);
                 String s = new SimpleDateFormat(datePattern, currentLocale).format(d);
@@ -451,17 +421,13 @@ public class GraphActivity extends Activity
                 String finalProgress = allData[8];
                 String comments = allData[9];
                 
-//                if(description.length() <= 1)
                 if(description.isEmpty() || description == null)
                 {
                     description = "No Project description found";
                 }
 
-//                if(comments.length() >= 1 && comments != null)
                 if(comments.isEmpty() || comments == null)
                 {
-//                    Toast.makeText(getApplicationContext(),
-//                            "Comments: " + comments.length() , Toast.LENGTH_SHORT).show();
                     comments = "No Project Comments found ";
                 }
                 
@@ -476,40 +442,15 @@ public class GraphActivity extends Activity
         });
 	}
 	
+	/**
+	 * Series is to set how the data point and line, look and act for distraction line.<br>
+	 * The data point listener is here.
+	 * @param mArDP array of data point
+	 */
 	public void setDateDistractionSeries(DataPoint[] mArDP)
 	{
 		seriesDateDistraction = new LineGraphSeries<DataPoint>(mArDP);
-//		seriesDateDistraction.setTitle("series title");
 		seriesDateDistraction.setColor(Color.RED);
-		
-		// setting for line graph
-//		seriesDateDistraction.setDrawDataPoints(true);
-//		seriesDateDistraction.setDataPointsRadius(30);
-//		seriesDateDistraction.setThickness(8);
-//		paint = new Paint();
-//		paint.setStyle(Paint.Style.FILL);
-//		paint.setStrokeWidth(10);
-//		paint.setPathEffect(new DashPathEffect(new float[]{8, 5}, 0));
-//		seriesDateDistraction.setCustomPaint(paint);
-		
-//		seriesDateDistraction.setOnDataPointTapListener(new OnDataPointTapListener()
-//		{
-//		    @Override
-//		    public void onTap(Series series, DataPointInterface dataPoint)
-//		    {
-//		    	// To get date from double type to a Date type
-//		    	long l = (long) (dataPoint.getX());
-//		    	Date d = new Date(l);
-//		    	String s = new SimpleDateFormat("MM/dd/yyyy", Locale.US).format(d);
-//		        Toast.makeText(getApplicationContext(), 
-//		        		"date: "+ s + ", grade: " + dataPoint.getY(), Toast.LENGTH_SHORT).show();
-//		        
-//		        DataWholeRow = dBHelperAdapter.getAllDataByDateAndGrade(s, ""+(int)dataPoint.getY());
-//		        tvSelectedProjectInfo.setText("date: "+ s + ", grade: " + dataPoint.getY() + 
-//		        		"\nid | title | lang | des | start | spent | prod | dist | prog | com\n" + 
-//		        		DataWholeRow + "\n" + strDBDateAndGrades);
-//		    }
-//		});
 	}
 	
 	/**
@@ -519,7 +460,7 @@ public class GraphActivity extends Activity
 	public void setGridLabelRenderer()
 	{
 		gridLabelRenderer.setLabelFormatter(new DateAsXAxisLabelFormatter(getApplicationContext()));
-		gridLabelRenderer.setNumHorizontalLabels(4); // only 4 because of the space
+		gridLabelRenderer.setNumHorizontalLabels(4); // only 4 because of the screen space
 		gridLabelRenderer.setNumVerticalLabels(6);
 	}
 	
@@ -555,6 +496,15 @@ public class GraphActivity extends Activity
 		viewport.setYAxisBoundsManual(true);
 	}
 	
+	/**
+	 * On current version of GraphView API,<br>
+	 * I found the graph has to have at least 1 data point for it to function.<br>
+	 * At least to have 2 points for the listener to work on the second point.<br>
+	 * So, this method is to insert a placeholder date 1 day before the first recorded date.<br>
+	 * <br>
+	 * NOTE: this method still not taking care the whole data point problem, need to upgrade.
+	 * @return Date
+	 */
 	public Date subtractOneDay()
 	{
 		long nl = (long) (alDateGradeDataPoints.get(0).getX());

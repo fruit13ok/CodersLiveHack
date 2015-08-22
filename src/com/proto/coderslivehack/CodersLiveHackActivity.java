@@ -17,7 +17,9 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
-
+/**
+ * This is the home page with a user guide and link to other pages.
+ */
 public class CodersLiveHackActivity extends FragmentActivity
 {
 	Button btnHomeToCreateTask, btnHomeToSelectTask, btnHomeToGraph, btnHomeToNumGitCommit;
@@ -45,8 +47,11 @@ public class CodersLiveHackActivity extends FragmentActivity
 		btnHomeToGraph = (Button) findViewById(R.id.btnHomeToGraph);
 		btnHomeToNumGitCommit = (Button) findViewById(R.id.btnHomeToNumGitCommit);
 		
+		// table will be exist when create the database adapter
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		
+		// these condition checks make the app more robust, 
+		// future upgrade should add more such checks
 //		if(dBHelperAdapter.isTableExists())
 //		{
 //			System.out.println("mytab: table exist");
@@ -123,7 +128,11 @@ public class CodersLiveHackActivity extends FragmentActivity
 	}
 	
 	/**
-	 * create a ViewPager to let user swipe through each page of instruction on how to use this app.
+	 * create a ViewPager to let user swipe through each page of instruction on how to use this app.<br>
+	 * use PagerAdapter to manage the list of fragments.
+	 * <br><br>
+	 * NOTE: I only use minimum of ViewPager. in future upgrade can create an indicator for it too.
+	 * ViewPager object can access each fragment too.
 	 */
 	private void initViewPager()
 	{

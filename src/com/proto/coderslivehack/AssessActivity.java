@@ -18,12 +18,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 /**
- * Replace old AssessActivity.java with this new version I created.
+ * This page is important for produce graph data.<br>
+ * It input final grade, and distraction level of each finished project into database.
  */
 public class AssessActivity extends Activity
 {
-	
 	Spinner spDistraction, spProductivity;
 	EditText etTaskComments;
 	ArrayAdapter<CharSequence> aaDistraction;
@@ -68,20 +69,19 @@ public class AssessActivity extends Activity
 		aaDistraction.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spDistraction.setAdapter(aaDistraction);
 
-		spDistraction.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+		spDistraction.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
 			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+			{
 				mDistraction_value = parent.getItemAtPosition(position).toString();
 			}
-
 			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
+			public void onNothingSelected(AdapterView<?> parent)
+			{
 				mDistraction_value = parent.getItemAtPosition(0).toString();
 			}
 		});
-
-
 
 		spProductivity = (Spinner) findViewById(R.id.spProductivity);
 		aaProductivity = ArrayAdapter.createFromResource(this,
@@ -91,31 +91,24 @@ public class AssessActivity extends Activity
 		aaProductivity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		spProductivity.setAdapter(aaProductivity);
 
-		spProductivity.setOnItemSelectedListener(new OnItemSelectedListener() {
-
+		spProductivity.setOnItemSelectedListener(new OnItemSelectedListener()
+		{
 			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
+			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
+			{
 				mProductivity_value = parent.getItemAtPosition(position).toString();
-
 			}
-
 			@Override
-			public void onNothingSelected(AdapterView<?> parent) {
+			public void onNothingSelected(AdapterView<?> parent)
+			{
 				mProductivity_value = parent.getItemAtPosition(0).toString();
-
 			}
 		});
 
-		//Reference etTaskComments edit text
 		etTaskComments = (EditText) findViewById(R.id.etTaskComments);
-
-
 		btnAssessToHome = (Button) findViewById(R.id.btnAssessToHome);
-//		btnAssessToHome.setVisibility(View.GONE);
-		
 		btnAssessToGraph = (Button) findViewById(R.id.btnAssessToGraph);
-//		btnAssessToGraph.setVisibility(View.GONE);
+
 		if(mDBHelperAdapter.isGraphableDataExists())
 		{
 			System.out.println("mytab: graph data exist");
@@ -134,8 +127,6 @@ public class AssessActivity extends Activity
 			public void onClick(View v)
 			{
 				// user must submit the assessment to database before go else where,
-
-				//Submit Distraction and Productivity values to database
 				mDBHelperAdapter.insert_DistractionLevel(mCurrProject,mDistraction_value);
 				mDBHelperAdapter.insert_ProductivityValues(mCurrProject, mProductivity_value);
 
@@ -143,20 +134,17 @@ public class AssessActivity extends Activity
 
 				mDBHelperAdapter.insert_TaskComments(mCurrProject,mTaskCommentsValues);
 
+				//TODO: delete test later
 				Toast.makeText(getApplicationContext(),
 						"Dis Val entered into DB is : " + mDBHelperAdapter.get_DistractionLevel(mCurrProject),
 						Toast.LENGTH_SHORT).show();
-
 				Toast.makeText(getApplicationContext(),
 						"Prod Val entered into DB is : " + mDBHelperAdapter.get_ProductivityLevel(mCurrProject),
 						Toast.LENGTH_SHORT).show();
-
 				Toast.makeText(getApplicationContext(),
 						"Task Comment Value entered into DB : " + mDBHelperAdapter.get_TaskComment(mCurrProject),
 						Toast.LENGTH_SHORT).show();
 
-//				btnAssessToHome.setVisibility(View.VISIBLE);
-//				btnAssessToGraph.setVisibility(View.VISIBLE);
 				btnAssessToGraph.setEnabled(true);
 			}
 		});
@@ -181,121 +169,4 @@ public class AssessActivity extends Activity
 			}
 		});
 	}
-	
-/*
-	Spinner spProductivity, spDistraction, spDefficulty;
-	ArrayList<String> alProductivity, alDistraction, alDefficulty;
-	ArrayAdapter<String> aaProductivity, aaDistraction, aaDefficulty;
-	Button btnSubmitToDB, btnAssessToHome, btnAssessToGraph;
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_assess);
-		
-		spProductivity = (Spinner) findViewById(R.id.spProductivity);
-		alProductivity = new ArrayList<String>();
-		alProductivity.add("item 1");
-		alProductivity.add("item 2");
-		aaProductivity = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, alProductivity);
-		aaProductivity.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spProductivity.setAdapter(aaProductivity);
-		spProductivity.setOnItemSelectedListener(new OnItemSelectedListener()
-		{
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-			{
-				Toast.makeText(parent.getContext(),
-						"Selected : " + parent.getItemAtPosition(position).toString(),
-						Toast.LENGTH_SHORT).show();
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> parent)
-			{
-			}
-		});
-		spDistraction = (Spinner) findViewById(R.id.spDistraction);
-		alDistraction = new ArrayList<String>();
-		alDistraction.add("item 1");
-		alDistraction.add("item 2");
-		aaDistraction = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, alDistraction);
-		aaDistraction.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spDistraction.setAdapter(aaDistraction);
-		spDistraction.setOnItemSelectedListener(new OnItemSelectedListener()
-		{
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-			{
-				Toast.makeText(parent.getContext(),
-						"Selected : " + parent.getItemAtPosition(position).toString(),
-						Toast.LENGTH_SHORT).show();
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> parent)
-			{
-			}
-		});
-		spDefficulty = (Spinner) findViewById(R.id.spDefficulty);
-		alDefficulty = new ArrayList<String>();
-		alDefficulty.add("item 1");
-		alDefficulty.add("item 2");
-		aaDefficulty = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, alDefficulty);
-		aaDefficulty.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spDefficulty.setAdapter(aaDefficulty);
-		spDefficulty.setOnItemSelectedListener(new OnItemSelectedListener()
-		{
-			@Override
-			public void onItemSelected(AdapterView<?> parent, View view, int position, long id)
-			{
-				Toast.makeText(parent.getContext(),
-						"Selected : " + parent.getItemAtPosition(position).toString(),
-						Toast.LENGTH_SHORT).show();
-			}
-			@Override
-			public void onNothingSelected(AdapterView<?> parent)
-			{
-			}
-		});
-		
-		btnAssessToHome = (Button) findViewById(R.id.btnAssessToHome);
-		btnAssessToHome.setVisibility(View.GONE);
-		
-		btnAssessToGraph = (Button) findViewById(R.id.btnAssessToGraph);
-		btnAssessToGraph.setVisibility(View.GONE);
-		
-		btnSubmitToDB = (Button) findViewById(R.id.btnSubmitToDB);
-		btnSubmitToDB.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				// TODO:
-				// user must submit the assessment to database before go else where,
-				btnAssessToHome.setVisibility(View.VISIBLE);
-				btnAssessToGraph.setVisibility(View.VISIBLE);
-			}
-		});
-		btnAssessToHome.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent assessToHomeIntent = new Intent(getBaseContext(), CodersLiveHackActivity.class);
-				startActivity(assessToHomeIntent);
-				finish();
-			}
-		});
-		btnAssessToGraph.setOnClickListener(new OnClickListener()
-		{
-			@Override
-			public void onClick(View v)
-			{
-				Intent assessToGraphIntent = new Intent(getBaseContext(), GraphActivity.class);
-				startActivity(assessToGraphIntent);
-				finish();
-			}
-		});
-	}
-*/
 }

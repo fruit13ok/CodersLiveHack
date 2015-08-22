@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+/**
+ * a fragment for viewpager contain layout of create task guide
+ */
 public class FragmentCreateTaskGuide extends Fragment
 {
 	@Override

@@ -18,7 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /*
- * This completes changes and additions to CreateTaskActivity.java
+ * This page user create projects and keep them in database
  */
 public class CreateTaskActivity extends Activity
 {
@@ -58,6 +58,7 @@ public class CreateTaskActivity extends Activity
 		
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		
+		// again for robust
 		if(dBHelperAdapter.isDataExists())
 		{
 			System.out.println("mytab: data exist");
@@ -74,12 +75,12 @@ public class CreateTaskActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				// TODO:
-				// add to database stuffs
+				// insert user input project to database stuffs, if unique
 				projectTitle = etSetProjectTitle.getText().toString().trim();
 				programmingLanguages = etSetProjectPLanguages.getText().toString().trim();
 				projectDescription = etSetProjectDescription.getText().toString().trim();
 				
+				// query titles
 				allProjectTitleFromDB = "";
 				allProjectTitleFromDB = dBHelperAdapter.getAllProjectTitles();
 				arAllProjectTitleFromDB = allProjectTitleFromDB.split("\\|");

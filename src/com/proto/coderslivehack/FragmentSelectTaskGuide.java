@@ -7,6 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+/**
+ * a fragment for viewpager contain layout of select task guide
+ */
 public class FragmentSelectTaskGuide extends Fragment
 {
 	@Override

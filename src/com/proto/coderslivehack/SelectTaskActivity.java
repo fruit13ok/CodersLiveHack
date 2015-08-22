@@ -23,7 +23,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-
+/**
+ * This page display all stored project from database. It shows project info and progress color coded.
+ */
 public class SelectTaskActivity extends Activity
 {
 	ArrayList<String> alProjectList = new ArrayList<String>();
@@ -55,7 +57,7 @@ public class SelectTaskActivity extends Activity
 		
 		selectedTask = "";
 		
-		// populate the alProjectList by query the database
+		// populate the custom ListView by query the database
 		dBHelperAdapter = new DBHelperAdapter(getApplicationContext());
 		String strAllData = dBHelperAdapter.getAllData();
 //		String strAllData = dBHelperAdapter.getAllDataNotComplete();
@@ -94,26 +96,15 @@ public class SelectTaskActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				// TODO:
 				// intent to TimerActivity, check pass string first,
 				// if user not select any task or selected the completed task toast to use.
-				// for now only select incomplete task can go to timer, (talk to Joel to confirm).
+				// for now only select incomplete task can go to timer.
 				Intent selectTaskToTimerIntent = new Intent(getBaseContext(), TimerActivity.class);
-				// TODO: after most this app done, should not allow user go to timer without select valid project.
+				// not allow user go to timer without select valid project.
 				if(selectedTask.isEmpty())
 				{
 					Toast.makeText(getApplicationContext(), "no project select", Toast.LENGTH_LONG).show();
-//					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "no project select");
-//					startActivity(selectTaskToTimerIntent);
-//					finish();
 				}
-//				else if(isCompleteOrAbandon())
-//				{
-//					// later just toast
-//					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, "project has complete or abandon");
-//					startActivity(selectTaskToTimerIntent);
-//					finish();
-//				}
 				else
 				{
 					selectTaskToTimerIntent.putExtra(EXTRA_SELECTED_TASK, selectedTask);
@@ -148,6 +139,10 @@ public class SelectTaskActivity extends Activity
 		});
 	}
 	
+	/**
+	 * Customize the ArrayAdapter with a our own View.
+	 * To change the View of each list item, change this xml file: select_list_item.xml
+	 */
 	class CustomArrayAdapter extends ArrayAdapter<String>
 	{
 		List<String> lProjectList;
@@ -221,10 +216,10 @@ public class SelectTaskActivity extends Activity
 		}
 	}
 	
-	public boolean isCompleteOrAbandon()
-	{
-		String projectTitle = selectedTask.split(" ")[1];
-		String projectProgress = dBHelperAdapter.getProjectProgress(projectTitle);
-		return (projectProgress.equalsIgnoreCase("completed") || projectProgress.equalsIgnoreCase("abandoned"));
-	}
+//	public boolean isCompleteOrAbandon()
+//	{
+//		String projectTitle = selectedTask.split(" ")[1];
+//		String projectProgress = dBHelperAdapter.getProjectProgress(projectTitle);
+//		return (projectProgress.equalsIgnoreCase("completed") || projectProgress.equalsIgnoreCase("abandoned"));
+//	}
 }

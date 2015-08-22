@@ -19,15 +19,15 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 
-// TODO: make a subaccumulated work time count for user stop the timer (stop before the section finish) add the record.
-
-/*
- * I made one change to TimerActivity.java. I added to the method:
- *
- *      btnTimerToAssess.setOnClickListener(new OnClickListener()
- *
- * You can copy and replace the method. I just  added that when the button is pressed
- *      it sends the AsssessActivity.java class the current project name.
+/**
+ * This page use timer to accumulate total work time spent for a project.<br>
+ * The timer has a fix auto work and break cycle of 50 minutes : 10 minutes.<br>
+ * User can pause the timer manually too.<br>
+ * User will use timer page to mark the progress of the project.<br>
+ * This version of timer had a stoppingPoint which is a max allowed time spent for auto stop.<br>
+ * <br>
+ * NOTE: this timer I use 2 unit of measurement millisecond and second, 
+ * be careful when upgrade the code.
  */
 public class TimerActivity extends Activity
 {
@@ -39,8 +39,8 @@ public class TimerActivity extends Activity
 	
 	long countDownInterval, workTime1, workTime2, breakTime1, breakTime2, workTimeRemain;
 	/**
-	 * <b>accumulatedTimeSpent</b>, <b>partialSectionTimeSpent</b>, <b>recordedTimeSpent</b>, 
-	 * and <b>stoppingPoint</b> measure in second <b><ins><i>NOT</i></ins></b> millisecond
+	 * <b>accumulatedTimeSpent</b>, <b>recordedTimeSpent</b>, and <b>stoppingPoint</b>
+	 * measure in second <b><ins><i>NOT</i></ins></b> millisecond
 	 */
 	long accumulatedTimeSpent, recordedTimeSpent, stoppingPoint;
 
@@ -116,6 +116,7 @@ public class TimerActivity extends Activity
 		btnTimerToHome = (Button) findViewById(R.id.btnTimerToHome);
 		btnTimerToAssess = (Button) findViewById(R.id.btnTimerToAssess);
 		
+		// Set work time and break time cycle, and stoppingPoint here
         workTime1 = 30 * 1000;			//25 min, 25 * 60 * 1000
         workTime2 = 50 * 60 * 1000;		//50 min
         breakTime1 = 5 * 1000;			//5 min
@@ -127,7 +128,7 @@ public class TimerActivity extends Activity
         // may be useful for set max work load, for example no more than 16 hours a day.
         stoppingPoint = 120;			//!!! this is measure in second not millisecond
         
-        //Init: not pause, not cancel flags, enable start, disabled pause, resume, and cancel buttons
+        // initially not pause, not cancel flags, enable start, disabled pause, resume, and cancel buttons
         if(isCompleteOrAbandon())
         {
         	setButtonAndFlagState(false, false, false, false, false, false);
@@ -155,7 +156,7 @@ public class TimerActivity extends Activity
 			@Override
 			public void onClick(View v)
 			{
-				//
+				// only record start time at first time.
 				if(dBHelperAdapter.getProjectProgress(curProjTitle).equalsIgnoreCase("not start"))
 				{
 //					String timeStamp = new SimpleDateFormat(
@@ -198,7 +199,7 @@ public class TimerActivity extends Activity
 			}
 		});
         
-        // insertTimeSpentToDB() here is NOT redundant, it is for when user click pause then stop
+        // insertTimeSpentToDB() here is NOT redundant, it is for when user click pause then click stop
         btnStopTimer.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -206,7 +207,7 @@ public class TimerActivity extends Activity
 			{
 				setButtonAndFlagState(false, true, true, false, false, false);
 
-				//TODO: commented out for test
+				//TODO: delete this later
                 //Notify the user that CountDownTimer is canceled/stopped
 //				tvTimer.setText("CountDownTimer stopped.");
 				
@@ -214,7 +215,7 @@ public class TimerActivity extends Activity
 			}
 		});
         
-        // TODO: do mark project as complete to database, may be the accumulation time spent too
+        // mark project as complete to database
         btnMarkProjectComplete.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -227,7 +228,7 @@ public class TimerActivity extends Activity
 			}
 		});
         
-        // TODO: do mark project as abandon to database, may be the accumulation time spent too
+        // mark project as abandon to database
         btnMarkProjectAbandon.setOnClickListener(new OnClickListener()
 		{
 			@Override
@@ -303,7 +304,6 @@ public class TimerActivity extends Activity
                 else 
                 {
                     //Display the remaining seconds to app interface
-                	
                 	long cdInMinutes = TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished);
                 	long cdInSeconds = TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished);
                 	long cdRemainSecond = cdInSeconds - TimeUnit.MINUTES.toSeconds(cdInMinutes);
@@ -329,10 +329,6 @@ public class TimerActivity extends Activity
             	// EX:
             	// a pomodoro section total 4 hours, 4 cycle each 1 hour; then there are only 4 call.
             	// also CountDownTimer is not a service will close if activity go to background.
-//            	btnStartTimer.setEnabled(false);
-//            	btnPauseTimer.setEnabled(false);
-//            	btnResumeTimer.setEnabled(false);
-//            	btnStopTimer.setEnabled(true);
             	setButtonAndFlagState(false, false, false, false, false, true);
                 setBreakTimer(breakTime1, countDownInterval);
             }
@@ -371,10 +367,6 @@ public class TimerActivity extends Activity
             }
             public void onFinish()
             {
-//            	btnStartTimer.setEnabled(false);
-//            	btnPauseTimer.setEnabled(true);
-//            	btnResumeTimer.setEnabled(false);
-//            	btnStopTimer.setEnabled(true);
             	setButtonAndFlagState(false, false, false, true, false, true);
                 setWorkTimer(workTime1, countDownInterval);
             }
@@ -439,7 +431,9 @@ public class TimerActivity extends Activity
 			btnStopTimer.setCompoundDrawablesWithIntrinsicBounds(null, null, drawableStopSubdued, null);
 	}
 	
-	//update db project time spent, unit of measurement is second
+	/**
+	 * update db project time spent, unit of measurement is second
+	 */
 	public void insertTimeSpentToDB()
 	{
 		String timeSpentFromDB = dBHelperAdapter.get_TimeSpent(curProjTitle);
@@ -459,7 +453,7 @@ public class TimerActivity extends Activity
     	String subTotleTimeSpent = String.format(Locale.US, 
             			"%d:%d:%d", 
             			sttsInHours, sttsRemainMinute, sttsRemainSecond);
-    	// TODO: move this to top
+    	
     	tvAccumulatedTimeSpent.setText("project accumulatedTimeSpent: " + subTotleTimeSpent);
     	// do actual update to db
     	dBHelperAdapter.insert_TimeSpent(curProjTitle, subTotleTimeSpent);
@@ -477,6 +471,11 @@ public class TimerActivity extends Activity
     	accumulatedTimeSpent = 0;
 	}
 	
+	/**
+	 * String hr:min:sec  to  long sec
+	 * @param strTime
+	 * @return long
+	 */
 	public long timeToSecond(String strTime)
 	{
 		String[] tempTime = strTime.split(":");
@@ -490,12 +489,20 @@ public class TimerActivity extends Activity
 		return subtotalSeconds;
 	}
 	
+	/**
+	 * check if the current project progress has mark as completed or abandoned
+	 * @return boolean
+	 */
 	public boolean isCompleteOrAbandon()
 	{
 		String projectProgress = dBHelperAdapter.getProjectProgress(curProjTitle);
 		return (projectProgress.equalsIgnoreCase("completed") || projectProgress.equalsIgnoreCase("abandoned"));
 	}
 	
+	/**
+	 * check if the current project progress has mark as assessed
+	 * @return boolean
+	 */
 	public boolean isAssessed()
 	{
 		String nGrade = dBHelperAdapter.get_ProductivityLevel(curProjTitle);
